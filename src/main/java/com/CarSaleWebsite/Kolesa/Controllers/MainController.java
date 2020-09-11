@@ -75,43 +75,7 @@ public class MainController {
 
         return "redirect:/users";
     }
-    @GetMapping("/food/add")
-    public  String addFood()
-    {
-        return "add-food";
-    }
-    @PostMapping("/food/add")
-    public String addFoodAction(@RequestParam String category,
-                                @RequestParam String nme,
-                                @RequestParam String description,
-                                @RequestParam long price,
-                                @RequestParam String size,
-                                @RequestParam String image){
-        Food burger=new Food(StringConfigurerFunctions.replaceWhiteSpaceWithMinus(nme),description,price,size,image,category);
-        foodRepository.save(burger);
-        return "redirect:/";
 
-    }
-
-    @GetMapping("/{category}/{name}")
-        public String detailedViewFood(Model model,
-                                       @PathVariable(value = "category") String category,
-                                       @PathVariable(value = "name")String name){
-        if(!foodRepository.existsByCategoryAndName(category,name)){
-            return "redirect:/";
-        }
-        Food food=foodRepository.findFoodByCategoryAndName(category,name);
-        model.addAttribute("food",food);
-
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String strDate = dateFormat.format(date);
-
-        model.addAttribute("date",strDate);
-
-        return "detailed-view-food";
-
-    }
 
 
 }
