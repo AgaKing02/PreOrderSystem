@@ -1,7 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
-import com.CarSaleWebsite.Kolesa.Functions.IQRCGenerator;
-import com.CarSaleWebsite.Kolesa.Functions.StringConfigurerFunctions;
+
 import com.CarSaleWebsite.Kolesa.Models.Food;
 import com.CarSaleWebsite.Kolesa.Models.Usr;
 import com.CarSaleWebsite.Kolesa.Repositories.FoodRepository;
@@ -11,15 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+
 
 @Controller
 public class MainController {
