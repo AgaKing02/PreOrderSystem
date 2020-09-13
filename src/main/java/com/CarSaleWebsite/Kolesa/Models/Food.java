@@ -11,6 +11,7 @@ public class Food {
     @Column(nullable = false,unique = true)
     public String name;
 
+    @Column(columnDefinition = "text")
     public String description;
 
     public long price=0;

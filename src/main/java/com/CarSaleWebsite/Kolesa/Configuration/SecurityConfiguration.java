@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/users","/users/add","/food/add").hasRole("ADMIN")
+                .antMatchers("/users","/users/add","/food/add","/food/edit","food/remove").hasRole("ADMIN")
                 .antMatchers("/profile","/order").authenticated()
                 .and()
                 .formLogin()
@@ -35,7 +35,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID")
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true).and().rememberMe().rememberMeParameter("checkRememberMe").key("aga123").tokenValiditySeconds(60*60);
+
+        ;
 
     }
 

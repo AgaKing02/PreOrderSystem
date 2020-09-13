@@ -1,7 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
-import com.CarSaleWebsite.Kolesa.Functions.IQRCGenerator;
-import com.CarSaleWebsite.Kolesa.Functions.StringConfigurerFunctions;
+
 import com.CarSaleWebsite.Kolesa.Models.Food;
 import com.CarSaleWebsite.Kolesa.Models.Usr;
 import com.CarSaleWebsite.Kolesa.Repositories.FoodRepository;
@@ -11,15 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+
 
 @Controller
 public class MainController {
@@ -75,43 +70,7 @@ public class MainController {
 
         return "redirect:/users";
     }
-    @GetMapping("/food/add")
-    public  String addFood()
-    {
-        return "add-food";
-    }
-    @PostMapping("/food/add")
-    public String addFoodAction(@RequestParam String category,
-                                @RequestParam String nme,
-                                @RequestParam String description,
-                                @RequestParam long price,
-                                @RequestParam String size,
-                                @RequestParam String image){
-        Food burger=new Food(StringConfigurerFunctions.replaceWhiteSpaceWithMinus(nme),description,price,size,image,category);
-        foodRepository.save(burger);
-        return "redirect:/";
 
-    }
-
-    @GetMapping("/{category}/{name}")
-        public String detailedViewFood(Model model,
-                                       @PathVariable(value = "category") String category,
-                                       @PathVariable(value = "name")String name){
-        if(!foodRepository.existsByCategoryAndName(category,name)){
-            return "redirect:/";
-        }
-        Food food=foodRepository.findFoodByCategoryAndName(category,name);
-        model.addAttribute("food",food);
-
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String strDate = dateFormat.format(date);
-
-        model.addAttribute("date",strDate);
-
-        return "detailed-view-food";
-
-    }
 
 
 }

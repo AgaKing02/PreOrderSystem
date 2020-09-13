@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 
 <head>
@@ -29,48 +30,35 @@
     <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
     <meta name="theme-color" content="#563d7c">
 
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
-
-    </style>
-    <!-- Custom styles for this template -->
-    <link href="pricing.css" rel="stylesheet">
 </head>
 
 <body>
 <div th:insert="blocks/header :: header"/>
 
 <div th:insert="blocks/blog :: blog"/>
+<div class="container-fluid text-center">
 <div class="row">
-    <div class="col-3 text-center shadow rounded pt-5" th:each="food : ${foods}" style="margin: 10px">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 text-center shadow rounded pt-5 my-5" th:each="food : ${foods}">
 
-        <img th:src="${food.getImage_url()}" th:alt="${food.getName()}" style="max-height: 200px;max-width: 200px;">
+        <img th:src="${food.getImage_url()}" th:alt="${food.getName()}" style="height: 200px;max-width: 200px;">
         <h2 th:text="${food.getName()}"/>
         <p th:text="${food.getCategory()}"/>
         <p><b>Size:</b></p>
         <h4 th:text="${food.getSize()}"/>
-        <h3><b>Price:</b> </h3><br>
-        <p th:text="${food.getPrice()}+'tg'"/>
+        <h4><b>Price:</b> </h4><br>
+        <b><h3 th:text="${food.getPrice()}+'tg'"/></b>
+
 
 
         <p><a class="btn btn-secondary" th:href="'/'+${food.getCategory()}+'/'+${food.getName()}" role="button">View
             details »</a></p>
+
+      <div class="row text-center">
+          <a  class="btn btn-success m-2" th:href="'/food/edit/'+${food.getID()}" sec:authorize="hasRole('ROLE_ADMIN')" role="button">Edit</a>
+          <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="'/food/remove/'+${food.getID()}" method="post"><input type="submit" value="Remove" class="btn btn-danger"></form>
     </div>
+    </div>
+</div>
 </div>
 <footer th:insert="blocks/footer :: footer"/>
 
