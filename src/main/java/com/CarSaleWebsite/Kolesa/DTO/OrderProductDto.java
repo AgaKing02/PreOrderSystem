@@ -4,14 +4,14 @@ import com.CarSaleWebsite.Kolesa.Models.Food;
 
 public class OrderProductDto {
 
-    private Food product;
-    private Integer quantity;
+private FoodDto product;
+private Integer quantity;
 
-    public Food getProduct() {
+    public FoodDto getProduct() {
         return product;
     }
 
-    public void setProduct(Food product) {
+    public void setProduct(FoodDto product) {
         this.product = product;
     }
 
@@ -23,3 +23,5 @@ public class OrderProductDto {
         this.quantity = quantity;
     }
 }
+//Json format of OrderProductDto
+// {"product":{"ID":1,"name":"Whopper","description":null,"price":0,"size":"M","image_url":null,"category":null,"id":1},"quantity":3}

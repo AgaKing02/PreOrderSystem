@@ -4,6 +4,7 @@ import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
 import com.CarSaleWebsite.Kolesa.Models.Order;
 import com.CarSaleWebsite.Kolesa.Models.OrderProduct;
 import com.CarSaleWebsite.Kolesa.Models.OrderStatus;
+import com.CarSaleWebsite.Kolesa.Repositories.UsersRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderProductService;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderService;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.ProductService;
@@ -17,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +31,7 @@ public class PurchaseController {
     ProductService productService;
     OrderService orderService;
     OrderProductService orderProductService;
+    UsersRepository usersRepository;
 
     public PurchaseController(ProductService productService, OrderService orderService, OrderProductService orderProductService) {
         this.productService = productService;
@@ -38,16 +41,17 @@ public class PurchaseController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public @NotNull Iterable<Order> list() {
-        return this.orderService.getAllOrders();
+    public @NotNull Iterable<Order> list(Principal principal) {
+        return this.orderService.getMyOrder(principal.getName());
     }
 
     @PostMapping
-    public ResponseEntity<Order> create(@RequestBody OrderForm form) {
+    public ResponseEntity<Order> create(@RequestBody OrderForm form,Principal principal) {
         List<OrderProductDto> formDtos = form.getProductOrders();
         validateProductsExistence(formDtos);
         Order order = new Order();
         order.setStatus(OrderStatus.PAID.name());
+        order.setUser(usersRepository.findUsersByUsername(principal.getName()));
         order = this.orderService.create(order);
 
         List<OrderProduct> orderProducts = new ArrayList<>();
@@ -63,7 +67,7 @@ public class PurchaseController {
 
         String uri = ServletUriComponentsBuilder
                 .fromCurrentServletMapping()
-                .path("/orders/{id}")
+                .path("/orderlist/{id}")
                 .buildAndExpand(order.getId())
                 .toString();
         HttpHeaders headers = new HttpHeaders();

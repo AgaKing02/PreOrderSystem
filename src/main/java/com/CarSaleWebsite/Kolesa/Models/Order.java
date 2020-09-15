@@ -1,6 +1,7 @@
 package com.CarSaleWebsite.Kolesa.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -24,6 +26,9 @@ public class Order {
     @JsonManagedReference
     @OneToMany(mappedBy = "pk.order")
     private List<OrderProduct> orderProducts = new ArrayList<>();
+
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    private Usr user;
 
     @Transient
     public Double getTotalOrderPrice() {
@@ -66,5 +71,13 @@ public class Order {
 
     public Long getId() {
         return order_id;
+    }
+
+    public Usr getUser() {
+        return user;
+    }
+
+    public void setUser(Usr user) {
+        this.user = user;
     }
 }
