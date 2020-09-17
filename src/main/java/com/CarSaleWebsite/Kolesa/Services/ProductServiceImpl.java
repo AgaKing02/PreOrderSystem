@@ -3,7 +3,7 @@ package com.CarSaleWebsite.Kolesa.Services;
 import com.CarSaleWebsite.Kolesa.Models.Food;
 import com.CarSaleWebsite.Kolesa.Repositories.FoodRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.ProductService;
-import com.CarSaleWebsite.Kolesa.exceptions.ResourceNotFoundException;
+import com.CarSaleWebsite.Kolesa.Exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,5 +32,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Food save(Food product) {
         return productRepository.save(product);
+    }
+
+    @Override
+    public Food getProduct(String name) {
+        return productRepository.findFoodByName(name);
     }
 }

@@ -108,7 +108,7 @@
                                   d="M5.5 3.5a2.5 2.5 0 0 1 5 0V4h-5v-.5zm6 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM6.854 8.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293 6.854 8.146z"/>
                         </svg>
                     </div>
-                    <div class="col-12 options d-none"><h4>Buy</h4>
+                    <div style="cursor: pointer;" class="col-12 options d-none" onclick="buy()"><h4>Buy</h4>
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bag-plus-fill"
                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -142,12 +142,34 @@
 
         }
     }
+    //{"productOrders":[{"product":{"name":"Whopper"},"quantity":3},{"product":{"name":"Coca-Cola"},"quantity":5}]}
+    function create(product,quantity){
+        return '{"product":{"name":"'+product+'"},"quantity":'+quantity+'}';
+    }
+    function generate(productArray){
+        let empty = '{"productOrders":[';
 
+        for (let i=0;i<productArray.length;i++){
+            if(productArray.length-1==i){
+            empty+=productArray[i];
+        }else{
+                empty+=productArray[i]+',';
+
+            }
+
+        }
+        return empty+']}';
+
+    }
+var products=[];
     function addToCart(idd) {
-
-        let empty = "";
         let count = parseInt($("input[name='count']#" + idd).val());
+
+
+
         if (count > 0) {
+            let product=create(idd,count);
+            products.push(product);
             let price = parseInt($("input." + idd).val());
             let item = $('#items').text();
             if (item == 'No items selected') {
@@ -167,8 +189,31 @@
 
 
     }
+    function buy(){
+        var json=generate(products);
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/api/orders",
+            data:json,
+            dataType: 'json',
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+             alert("success");
+
+            },
+            error: function (e) {
+
+              alert("error")
+
+            }
+        });
+
+    }
 
     function resetCart() {
+        products=[]
         $('#overall').val(parseInt(0));
         let item = $('#items').text();
         if (item != 'No items selected') {
@@ -180,43 +225,10 @@
 
         }
     }
-    // {"product":{"ID":1,"name":"Whopper","description":null,"price":0,"size":"M","image_url":null,"category":null,"id":1},"quantity":3}
 
 
 
-    // function setCookie(cname, cvalue, exdays) {
-    //     var d = new Date();
-    //     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    //     var expires = "expires="+d.toUTCString();
-    //     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    // }
-    //
-    // function getCookie(cname) {
-    //     var name = cname + "=";
-    //     var ca = document.cookie.split(';');
-    //     for(var i = 0; i < ca.length; i++) {
-    //         var c = ca[i];
-    //         while (c.charAt(0) == ' ') {
-    //             c = c.substring(1);
-    //         }
-    //         if (c.indexOf(name) == 0) {
-    //             return c.substring(name.length, c.length);
-    //         }
-    //     }
-    //     return "";
-    // }
-    //
-    // function checkCookie() {
-    //     var user = getCookie("username");
-    //     if (user != "") {
-    //         alert("Welcome again " + user);
-    //     } else {
-    //         user = prompt("Please enter your name:", "");
-    //         if (user != "" && user != null) {
-    //             setCookie("username", user, 365);
-    //         }
-    //     }
-    // }
+  
 
 </script>
 </html>

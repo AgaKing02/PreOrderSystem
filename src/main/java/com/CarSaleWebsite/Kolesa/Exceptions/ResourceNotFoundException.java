@@ -1,4 +1,4 @@
-package com.CarSaleWebsite.Kolesa.exceptions;
+package com.CarSaleWebsite.Kolesa.Exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 

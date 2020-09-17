@@ -14,4 +14,6 @@ public interface ProductService {
     Food getProduct(@Min(value = 1L, message = "Invalid product ID.") long id);
 
     Food save(Food product);
+
+    Food getProduct(String name);
 }

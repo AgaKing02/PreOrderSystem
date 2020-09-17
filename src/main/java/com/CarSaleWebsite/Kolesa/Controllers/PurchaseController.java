@@ -8,12 +8,11 @@ import com.CarSaleWebsite.Kolesa.Repositories.UsersRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderProductService;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderService;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.ProductService;
-import com.CarSaleWebsite.Kolesa.exceptions.ResourceNotFoundException;
+import com.CarSaleWebsite.Kolesa.Exceptions.ResourceNotFoundException;
 import com.sun.istack.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -28,15 +27,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/orders")
 public class PurchaseController {
 
-    ProductService productService;
-    OrderService orderService;
-    OrderProductService orderProductService;
-    UsersRepository usersRepository;
+    private final ProductService productService;
+    private final OrderService orderService;
+    private final OrderProductService orderProductService;
+    private final UsersRepository usersRepository;
 
-    public PurchaseController(ProductService productService, OrderService orderService, OrderProductService orderProductService) {
+    public PurchaseController(ProductService productService, OrderService orderService, OrderProductService orderProductService, UsersRepository usersRepository) {
         this.productService = productService;
         this.orderService = orderService;
         this.orderProductService = orderProductService;
+        this.usersRepository = usersRepository;
     }
 
     @GetMapping
@@ -56,9 +56,7 @@ public class PurchaseController {
 
         List<OrderProduct> orderProducts = new ArrayList<>();
         for (OrderProductDto dto : formDtos) {
-            orderProducts.add(orderProductService.create(new OrderProduct(order, productService.getProduct(dto
-                    .getProduct()
-                    .getID()), dto.getQuantity())));
+            orderProducts.add(orderProductService.create(new OrderProduct(order, productService.getProduct(dto.getProduct().getName()), dto.getQuantity())));
         }
 
         order.setOrderProducts(orderProducts);
@@ -79,10 +77,10 @@ public class PurchaseController {
     private void validateProductsExistence(List<OrderProductDto> orderProducts) {
         List<OrderProductDto> list = orderProducts
                 .stream()
-                .filter(op -> Objects.isNull(productService.getProduct(op
-                        .getProduct()
-                        .getID())))
-                .collect(Collectors.toList());
+                .filter(op -> Objects.isNull(productService.getProduct(op.getProduct().getName()))).collect(Collectors.toList());
+
+
+
 
         if (!CollectionUtils.isEmpty(list)) {
             new ResourceNotFoundException("Product not found");

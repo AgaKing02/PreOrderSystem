@@ -1,25 +1,20 @@
 package com.CarSaleWebsite.Kolesa.DTO;
 
-import com.CarSaleWebsite.Kolesa.Models.Food;
-
 public class FoodDto {
-    public long ID;
+    public String name;
 
-    public FoodDto(long ID) {
-        this.ID = ID;
-    }
-    public FoodDto(){}
-
-    public long getID() {
-        return ID;
+    public FoodDto(String name) {
+        this.name = name;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-    public FoodDto(Food food){
-        this.ID=food.getID();
+    public FoodDto() {
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 }

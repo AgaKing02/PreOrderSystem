@@ -5,6 +5,7 @@ import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
 import com.CarSaleWebsite.Kolesa.Models.Food;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ public class TestContoller {
         OrderProductDto dto = new OrderProductDto();
         int quantity = 3;
         FoodDto food = new FoodDto();
-        food.setID(1);
+        food.setName("Whopper");
         dto.setProduct(food);
         dto.setQuantity(quantity);
 
@@ -29,7 +30,7 @@ public class TestContoller {
         OrderProductDto dto2 = new OrderProductDto();
         int quantity2 = 5;
         FoodDto food2 = new FoodDto();
-        food2.setID(4);
+        food2.setName("Coca-Cola");
         dto2.setProduct(food2);
         dto2.setQuantity(quantity2);
         
@@ -51,4 +52,6 @@ public class TestContoller {
 
         return jsonString;
     }
+
+
 }
