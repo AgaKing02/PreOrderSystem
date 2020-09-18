@@ -1,6 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -12,7 +12,7 @@ import java.util.Objects;
 public class OrderProduct {
 
     @EmbeddedId
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private OrderProductPK pk;
 
     @Column(nullable = false)

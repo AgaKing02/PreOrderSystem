@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/orders")
+
 public class PurchaseController {
 
     private final ProductService productService;
@@ -39,24 +39,28 @@ public class PurchaseController {
         this.usersRepository = usersRepository;
     }
 
-    @GetMapping
+    @GetMapping("api/orders")
     @ResponseStatus(HttpStatus.OK)
     public @NotNull Iterable<Order> list(Principal principal) {
         return this.orderService.getMyOrder(principal.getName());
     }
 
-    @PostMapping
+    @PostMapping("/api/orders")
     public ResponseEntity<Order> create(@RequestBody OrderForm form,Principal principal) {
         List<OrderProductDto> formDtos = form.getProductOrders();
         validateProductsExistence(formDtos);
         Order order = new Order();
         order.setStatus(OrderStatus.PAID.name());
-        order.setUser(usersRepository.findUsersByUsername(principal.getName()));
+        order.setUser(usersRepository.findByUsername(principal.getName()));
         order = this.orderService.create(order);
 
         List<OrderProduct> orderProducts = new ArrayList<>();
         for (OrderProductDto dto : formDtos) {
-            orderProducts.add(orderProductService.create(new OrderProduct(order, productService.getProduct(dto.getProduct().getName()), dto.getQuantity())));
+            orderProducts
+                    .add(orderProductService
+                            .create(new OrderProduct(
+                                    order, productService.getProduct(
+                                            dto.getProduct().getName()), dto.getQuantity())));
         }
 
         order.setOrderProducts(orderProducts);

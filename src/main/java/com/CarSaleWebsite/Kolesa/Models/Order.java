@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class Order {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "pk.order")
+    @Valid
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
