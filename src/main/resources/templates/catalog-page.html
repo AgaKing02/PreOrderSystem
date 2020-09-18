@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 >
@@ -9,6 +8,7 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="icon" href="https://www.flaticon.com/premium-icon/icons/svg/562/562678.svg">
 
 
 </head>
@@ -22,6 +22,15 @@
     </div>
 </div>
 <div class="container">
+    <div id="ajaxreader" class="d-none" role="alert">
+        <strong id="message"></strong>
+        <button onclick="$('#ajaxreader').addClass('d-none');" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+</div>
+<div class="container">
 
 
     <!--    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-file-x float-right" fill="currentColor"-->
@@ -32,7 +41,7 @@
     <!--              d="M6.146 6.146a.5.5 0 0 1 .708 0L8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 0 1 0-.708z"/>-->
     <!--    </svg>-->
     <div class="row" id="row">
-        <div th:class="'col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 text-center shadow rounded pt-5 mr-1 '+${food.getCategory()}+' d-none'"
+        <div th:class="'col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 text-center shadow rounded pt-3 mr-1 '+${food.getCategory()}+' d-none'"
              th:each="food : ${foodList}">
 
             <img th:src="${food.getImage_url()}" th:alt="${food.getName()}" style="height: 200px;max-width: 200px;">
@@ -42,13 +51,24 @@
             <h4 th:text="${food.getSize()}" class="bg bg-warning"/>
             <h4><b>Price:</b></h4>
             <b><h3 th:id="${food.getName()}" th:text="${food.getPrice()}+'tg'"/></b>
-            <input type="number" th:class="'d-none '+${food.getName()}" name="price" th:value="${food.getPrice()}" >
+            <input type="number" th:class="'d-none '+${food.getName()}" name="price" th:value="${food.getPrice()}">
             <p>Cart:</p>
-           <input type="number" name="count" disabled value="0" min="0" class="text-center shadow-sm" th:id="${food.getName()}" style="width:50px;font-size: 20px;background-color: white;border:none;">
-            <br><br>
+            <br>
             <div class="row">
-                <div class="col-6 text-center">
-                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus-square  btn-outline-info" fill="currentColor" th:id="${food.getName()}" onclick="plus(this.id)"
+                <div class="col-4 text-center">
+                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-dash-square  btn-outline-info"
+                         fill="currentColor" th:id="${food.getName()}" onclick="minus(this.id)"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                    </svg>
+                </div>
+                <div class="col-4"> <input type="number" name="count" disabled value="0" min="0" class="text-center shadow-sm"
+                                           th:id="${food.getName()}" style="width:50px;font-size: 20px;background-color: white;border:none;"></div>
+                <div class="col-4  text-center">
+                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus-square  btn-outline-info"
+                         fill="currentColor" th:id="${food.getName()}" onclick="plus(this.id)"
                          xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
                               d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
@@ -56,107 +76,63 @@
                               d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                     </svg>
                 </div>
-                <div class="col-6  text-center">
-                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-dash-square  btn-outline-info" fill="currentColor" th:id="${food.getName()}" onclick="minus(this.id)"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                              d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                        <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                    </svg>
-                </div>
             </div>
 
+          <div class="row">
+              <div class="col-6 "><a class="mt-2 btn btn-secondary " th:href="'/'+${food.getCategory()}+'/'+${food.getName()}" >View</a></div>
+              <div class="col-6 "><button th:id="${food.getName()}" onclick="addToCart(this.id)" style="margin-top: 1px;margin-bottom: 3px;" class="mt-2 btn btn-warning ">Add</button></div>
 
-            <p><a class="btn btn-secondary mt-2" th:href="'/'+${food.getCategory()}+'/'+${food.getName()}" role="button">View
-                details »</a></p>
-            <p><button th:id="${food.getName()}" onclick="addToCart(this.id)" class="btn btn-warning">Add</button></p>
+          </div>
+
+
+
         </div>
     </div>
 </div>
+
 <footer class="footer mt-auto py-3">
-    <div class="container border border-dark rounded shadow" >
-        <div class="row p-3">
-            <div class="col-2">
-                <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-cart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+    <div class="container border border-dark rounded shadow">
+        <div class="row p-1">
+            <div class="col-3 col-xs-12">
+                <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-cart" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                 </svg>
+                <br>
+                <h4 id="over" class="d-none">Overall: </h4>
+                <input type="number" name="overall" disabled value="0" min="0" class="text-center shadow-sm d-none"
+                       id="overall" style="width:75px;font-size: 20px;background-color: white;border:none;"><span
+                    id="tg" class="d-none"> tg</span>
             </div>
-            <div class="col-10 border border-dark border-top-0 border-right-0 border-bottom-0">
+            <div class="col-7 col-xs-12 border border-dark border-top-0 border-right-0 border-bottom-0">
                 <p class="text text-center" id="items">No items selected</p>
+            </div>
+            <div class="col-2 col-xs-12">
+                <div class="row">
+                    <div class="col-12  options d-none"><h4>Reset</h4>
+                        <svg style="cursor: pointer;" onclick="resetCart()" width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bag-x-fill"
+                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M5.5 3.5a2.5 2.5 0 0 1 5 0V4h-5v-.5zm6 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM6.854 8.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293 6.854 8.146z"/>
+                        </svg>
+                    </div>
+                    <div style="cursor: pointer;" class="col-12 options d-none" onclick="buy()"><h4>Buy</h4>
+                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bag-plus-fill"
+                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M5.5 3.5a2.5 2.5 0 0 1 5 0V4h-5v-.5zm6 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5V8z"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </footer>
+
 <footer th:insert="blocks/footer :: footer"/>
 
 </body>
-<script>
-    function action(classname) {
-        $("." + classname).removeClass("d-none");
-        $('#row > *').not($('.' + classname)).addClass('d-none');
-    }
-    function plus(idd){
+<script src="CatalogFunctions.js"></script>
 
-       let value=parseInt($("input[name='count']#"+idd).val());
-        $('input#'+idd).val(value+1);
-    }
-    function minus(idd){
-        let value=parseInt($("input[name='count']#"+idd).val());
-        if(value>0){
-            $('input#'+idd).val(value-1);
-
-        }
-    }
-    function addToCart(idd) {
-
-        let empty="";
-        let count=parseInt($("input[name='count']#"+idd).val());
-        if(count>0){
-            let price=parseInt($("input."+idd).val());
-            let item=$('#items').text();
-            if(item=='No items selected'){
-                $('#items').text("");
-            }
-            $('#items').append('<br>'+idd+' x '+count+' overall: '+count*price+' tg');
-        }else{
-            alert("Firstly,choose the quantity")
-        }
-
-
-    }
-    // function setCookie(cname, cvalue, exdays) {
-    //     var d = new Date();
-    //     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    //     var expires = "expires="+d.toUTCString();
-    //     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    // }
-    //
-    // function getCookie(cname) {
-    //     var name = cname + "=";
-    //     var ca = document.cookie.split(';');
-    //     for(var i = 0; i < ca.length; i++) {
-    //         var c = ca[i];
-    //         while (c.charAt(0) == ' ') {
-    //             c = c.substring(1);
-    //         }
-    //         if (c.indexOf(name) == 0) {
-    //             return c.substring(name.length, c.length);
-    //         }
-    //     }
-    //     return "";
-    // }
-    //
-    // function checkCookie() {
-    //     var user = getCookie("username");
-    //     if (user != "") {
-    //         alert("Welcome again " + user);
-    //     } else {
-    //         user = prompt("Please enter your name:", "");
-    //         if (user != "" && user != null) {
-    //             setCookie("username", user, 365);
-    //         }
-    //     }
-    // }
-
-</script>
 </html>

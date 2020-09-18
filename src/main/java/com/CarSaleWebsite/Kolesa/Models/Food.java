@@ -86,6 +86,10 @@ public class Food {
         return ID;
     }
 
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
     @Override
     public String toString() {
         return "Food{" +
@@ -98,4 +102,5 @@ public class Food {
                 ", category='" + category + '\'' +
                 '}';
     }
+
 }
