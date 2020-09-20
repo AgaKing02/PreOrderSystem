@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long ID;
+    public Long ID;
 
     @Column(nullable = false,unique = true)
     public String name;
@@ -21,6 +21,7 @@ public class Food {
     public String image_url;
 
     public String category;
+
 
     public Food(String name, String description, long price, String size, String image_url, String category) {
         this.name = name;
@@ -86,7 +87,7 @@ public class Food {
         return ID;
     }
 
-    public void setID(long ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 

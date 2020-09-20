@@ -21,15 +21,7 @@
 
     </div>
 </div>
-<div class="container">
-    <div id="ajaxreader" class="d-none" role="alert">
-        <strong id="message"></strong>
-        <button onclick="$('#ajaxreader').addClass('d-none');" type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
 
-</div>
 <div class="container">
 
 
@@ -64,8 +56,10 @@
                         <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                     </svg>
                 </div>
-                <div class="col-4"> <input type="number" name="count" disabled value="0" min="0" class="text-center shadow-sm"
-                                           th:id="${food.getName()}" style="width:50px;font-size: 20px;background-color: white;border:none;"></div>
+                <div class="col-4"><input type="number" name="count" disabled value="0" min="0"
+                                          class="text-center shadow-sm"
+                                          th:id="${food.getName()}"
+                                          style="width:50px;font-size: 20px;background-color: white;border:none;"></div>
                 <div class="col-4  text-center">
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus-square  btn-outline-info"
                          fill="currentColor" th:id="${food.getName()}" onclick="plus(this.id)"
@@ -78,12 +72,16 @@
                 </div>
             </div>
 
-          <div class="row">
-              <div class="col-6 "><a class="mt-2 btn btn-secondary " th:href="'/'+${food.getCategory()}+'/'+${food.getName()}" >View</a></div>
-              <div class="col-6 "><button th:id="${food.getName()}" onclick="addToCart(this.id)" style="margin-top: 1px;margin-bottom: 3px;" class="mt-2 btn btn-warning ">Add</button></div>
+            <div class="row">
+                <div class="col-6 "><a class="mt-2 btn btn-secondary "
+                                       th:href="'/'+${food.getCategory()}+'/'+${food.getName()}">View</a></div>
+                <div class="col-6 ">
+                    <button th:id="${food.getName()}" onclick="addToCart(this.id)"
+                            style="margin-top: 1px;margin-bottom: 3px;" class="mt-2 btn btn-warning ">Add
+                    </button>
+                </div>
 
-          </div>
-
+            </div>
 
 
         </div>
@@ -111,7 +109,8 @@
             <div class="col-2 col-xs-12">
                 <div class="row">
                     <div class="col-12  options d-none"><h4>Reset</h4>
-                        <svg style="cursor: pointer;" onclick="resetCart()" width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bag-x-fill"
+                        <svg style="cursor: pointer;" onclick="resetCart()" width="2em" height="2em" viewBox="0 0 16 16"
+                             class="bi bi-bag-x-fill"
                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
                                   d="M5.5 3.5a2.5 2.5 0 0 1 5 0V4h-5v-.5zm6 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM6.854 8.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293 6.854 8.146z"/>
@@ -129,6 +128,24 @@
         </div>
     </div>
 </footer>
+<div class="container" id="layer" style="
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);">
+    <div class="row">
+        <div class="col-4 col-sm-3"></div>
+        <div  id="ajaxreader" class="col-4 col-sm-6 text-center d-none" role="alert" style="opacity: 1;">
+            <p id="message"></p>
+            <button onclick="action2()" type="button" class="close" data-dismiss="alert"
+                    aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="col-4 col-sm-3"></div>
+
+    </div>
+</div>
 
 <footer th:insert="blocks/footer :: footer"/>
 

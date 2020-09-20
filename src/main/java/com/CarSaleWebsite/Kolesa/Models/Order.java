@@ -1,12 +1,11 @@
 package com.CarSaleWebsite.Kolesa.Models;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,19 +23,22 @@ public class Order {
 
     private String status;
 
+    @JsonIgnore
     @JsonManagedReference
-    @OneToMany(mappedBy = "pk.order")
-    @Valid
-    private List<OrderProduct> orderProducts = new ArrayList<>();
+    @OneToMany(mappedBy = "order")
+    private List<OrderFood> orderProducts = new ArrayList<>();
 
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private Usr user;
+
 
     @Transient
     public Double getTotalOrderPrice() {
         double sum = 0D;
-        List<OrderProduct> orderProducts = getOrderProducts();
-        for (OrderProduct op : orderProducts) {
+        List<OrderFood> orderProducts = getOrderProducts();
+        for (OrderFood op : orderProducts) {
             sum += op.getTotalPrice();
         }
         return sum;
@@ -63,11 +65,11 @@ public class Order {
         this.status = status;
     }
 
-    public List<OrderProduct> getOrderProducts() {
+    public List<OrderFood> getOrderProducts() {
         return orderProducts;
     }
 
-    public void setOrderProducts(List<OrderProduct> orderProducts) {
+    public void setOrderProducts(List<OrderFood> orderProducts) {
         this.orderProducts = orderProducts;
     }
 
@@ -75,11 +77,26 @@ public class Order {
         return order_id;
     }
 
+    public Long getOrder_id() {
+        return order_id;
+    }
+
+    @Transient
     public Usr getUser() {
         return user;
     }
 
+
     public void setUser(Usr user) {
         this.user = user;
     }
+
+    public String getOrderProductsString() {
+        StringBuilder empty= new StringBuilder();
+        for (OrderFood food : orderProducts) {
+         empty.append(food.toString());
+        }
+        return empty.toString();
+    }
+
 }

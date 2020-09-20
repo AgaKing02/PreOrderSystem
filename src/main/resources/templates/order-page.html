@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Orders</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="icon" href="https://www.flaticon.com/premium-icon/icons/svg/562/562678.svg">
+
+</head>
+<body>
+<header th:insert="blocks/header :: header"/>
+<h1>My Orders</h1>
+<div class="container">
+    <div th:each="order:${orders}" class="border border-success m-3">
+        <h3 th:text="${order.getOrder_id()}"/><br>
+        <h4 th:text="${order.getOrderProductsString().toString()}"/><br>
+        <h4 th:text="${order.getTotalOrderPrice()}"/><br>
+    </div>
+</div>
+<footer th:insert="blocks/footer :: footer"/>
+</body>
+</html>
