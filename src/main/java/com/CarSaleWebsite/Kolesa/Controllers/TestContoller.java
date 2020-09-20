@@ -95,6 +95,9 @@ public class TestContoller {
             return ResponseEntity.badRequest().body(result);
 
         }
+        if(principal.getName().isEmpty()){
+           return ResponseEntity.badRequest().body("User not found");
+        }
         List<OrderProductDto> formDtos = form.getProductOrders();
         validateProductsExistence(formDtos);
         Order order = new Order();

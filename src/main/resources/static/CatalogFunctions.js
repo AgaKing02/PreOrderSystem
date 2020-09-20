@@ -87,11 +87,11 @@ function buy() {
 
 
         },
-        error: function (e) {
-
-            var json = "<h4>Order</h4><button class='btn btn-primary'><h1>Not Created</h1></button>";
+        error: function () {
+            var json = "<h4>Order</h4><button class='btn btn-primary'>Not Created</button>";
             $('#message').html(json);
             styles("danger")
+
 
         }
     });

@@ -99,4 +99,12 @@ public class Order {
         return empty.toString();
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "order_id=" + order_id +
+                ", dateCreated=" + dateCreated +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

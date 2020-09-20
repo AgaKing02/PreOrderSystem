@@ -14,10 +14,10 @@
 <header th:insert="blocks/header :: header"/>
 <h1>My Orders</h1>
 <div class="container">
-    <div th:each="order:${orders}" class="border border-success m-3">
-        <h3 th:text="${order.getOrder_id()}"/><br>
-        <h4 th:text="${order.getOrderProductsString().toString()}"/><br>
-        <h4 th:text="${order.getTotalOrderPrice()}"/><br>
+    <div th:each="order:${orders}" class="border border-success m-3 p-2">
+        <h3 th:text="${order.getDateCreated()}"/><br><br>
+        <h4 th:text="${order.getOrderProductsString().toString()}"/><br><br>
+        <h4 th:text="${order.getTotalOrderPrice()}"/><br><br>
     </div>
 </div>
 <footer th:insert="blocks/footer :: footer"/>
