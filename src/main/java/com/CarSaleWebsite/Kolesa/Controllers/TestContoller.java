@@ -105,7 +105,7 @@ public class TestContoller {
 
 
         if (!CollectionUtils.isEmpty(list)) {
-           throw new ResourceNotFoundException("Product not found");
+           throw new ResourceNotFoundException("Product not found in db");
         }
     }
 
