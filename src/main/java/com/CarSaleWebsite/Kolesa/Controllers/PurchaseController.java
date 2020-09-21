@@ -26,7 +26,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-
 public class PurchaseController {
 
     private final ProductService productService;
@@ -87,7 +86,7 @@ public class PurchaseController {
 
 
         if (!CollectionUtils.isEmpty(list)) {
-            new ResourceNotFoundException("Product not found");
+            throw new ResourceNotFoundException("Product not found");
         }
     }
 
