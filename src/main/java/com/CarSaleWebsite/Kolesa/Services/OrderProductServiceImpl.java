@@ -1,7 +1,7 @@
 package com.CarSaleWebsite.Kolesa.Services;
 
-import com.CarSaleWebsite.Kolesa.Models.OrderProduct;
-import com.CarSaleWebsite.Kolesa.Repositories.OrderProductRepository;
+import com.CarSaleWebsite.Kolesa.Models.OrderFood;
+import com.CarSaleWebsite.Kolesa.Repositories.OrderFoodRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,14 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class OrderProductServiceImpl implements OrderProductService {
 
-    private final OrderProductRepository orderProductRepository;
+    private final OrderFoodRepository orderProductRepository;
 
-    public OrderProductServiceImpl(OrderProductRepository orderProductRepository) {
+    public OrderProductServiceImpl(OrderFoodRepository orderProductRepository) {
         this.orderProductRepository = orderProductRepository;
     }
 
     @Override
-    public OrderProduct create(OrderProduct orderProduct) {
+    public OrderFood create(OrderFood orderProduct) {
         return this.orderProductRepository.save(orderProduct);
     }
 }

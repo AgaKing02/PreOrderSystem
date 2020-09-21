@@ -2,8 +2,9 @@ package com.CarSaleWebsite.Kolesa.Controllers;
 
 import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
 import com.CarSaleWebsite.Kolesa.Models.Order;
-import com.CarSaleWebsite.Kolesa.Models.OrderProduct;
+import com.CarSaleWebsite.Kolesa.Models.OrderFood;
 import com.CarSaleWebsite.Kolesa.Models.OrderStatus;
+import com.CarSaleWebsite.Kolesa.Repositories.OrderFoodRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.UsersRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderProductService;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderService;
@@ -13,6 +14,7 @@ import com.sun.istack.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,26 +26,23 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-
 public class PurchaseController {
 
     private final ProductService productService;
     private final OrderService orderService;
     private final OrderProductService orderProductService;
     private final UsersRepository usersRepository;
+    private final OrderFoodRepository orderFoodRepository;
 
-    public PurchaseController(ProductService productService, OrderService orderService, OrderProductService orderProductService, UsersRepository usersRepository) {
+    public PurchaseController(ProductService productService, OrderService orderService, OrderProductService orderProductService, UsersRepository usersRepository, OrderFoodRepository orderFoodRepository) {
         this.productService = productService;
         this.orderService = orderService;
         this.orderProductService = orderProductService;
         this.usersRepository = usersRepository;
+        this.orderFoodRepository = orderFoodRepository;
     }
 
-    @GetMapping("api/orders")
-    @ResponseStatus(HttpStatus.OK)
-    public @NotNull Iterable<Order> list(Principal principal) {
-        return this.orderService.getMyOrder(principal.getName());
-    }
+
 
     @PostMapping("/api/orders")
     public ResponseEntity<Order> create(@RequestBody OrderForm form,Principal principal) {
@@ -54,18 +53,18 @@ public class PurchaseController {
         order.setUser(usersRepository.findByUsername(principal.getName()));
         order = this.orderService.create(order);
 
-        List<OrderProduct> orderProducts = new ArrayList<>();
+        List<OrderFood> orderProducts = new ArrayList<>();
         for (OrderProductDto dto : formDtos) {
             orderProducts
                     .add(orderProductService
-                            .create(new OrderProduct(
+                            .create(new OrderFood(
                                     order, productService.getProduct(
                                             dto.getProduct().getName()), dto.getQuantity())));
         }
 
         order.setOrderProducts(orderProducts);
-
         this.orderService.update(order);
+        orderProducts.forEach(orderFoodRepository::save);
 
         String uri = ServletUriComponentsBuilder
                 .fromCurrentServletMapping()
@@ -87,7 +86,7 @@ public class PurchaseController {
 
 
         if (!CollectionUtils.isEmpty(list)) {
-            new ResourceNotFoundException("Product not found");
+            throw new ResourceNotFoundException("Product not found");
         }
     }
 

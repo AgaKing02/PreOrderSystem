@@ -16,33 +16,36 @@ function minus(idd) {
 
     }
 }
+
 //{"productOrders":[{"product":{"name":"Whopper"},"quantity":3},{"product":{"name":"Coca-Cola"},"quantity":5}]}
-function create(product,quantity){
-    return '{"product":{"name":"'+product+'"},"quantity":'+quantity+'}';
+function create(product, quantity) {
+    return '{"product":{"name":"' + product + '"},"quantity":' + quantity + '}';
 }
-function generate(productArray){
+
+function generate(productArray) {
     let empty = '{"productOrders":[';
 
-    for (let i=0;i<productArray.length;i++){
-        if(productArray.length-1==i){
-            empty+=productArray[i];
-        }else{
-            empty+=productArray[i]+',';
+    for (let i = 0; i < productArray.length; i++) {
+        if (productArray.length - 1 == i) {
+            empty += productArray[i];
+        } else {
+            empty += productArray[i] + ',';
 
         }
 
     }
-    return empty+']}';
+    return empty + ']}';
 
 }
-var products=[];
+
+var products = [];
+
 function addToCart(idd) {
     let count = parseInt($("input[name='count']#" + idd).val());
 
 
-
     if (count > 0) {
-        let product=create(idd,count);
+        let product = create(idd, count);
         products.push(product);
         let price = parseInt($("input." + idd).val());
         let item = $('#items').text();
@@ -63,35 +66,31 @@ function addToCart(idd) {
 
 
 }
-function buy(){
-    var json=generate(products);
-    alert(json)
+
+function buy() {
+    var json = generate(products);
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/api/test",
-        data:json,
+        data: json,
         dataType: 'json',
         cache: false,
-        timeout: 600000,    success: function (data) {
+        timeout: 600000, success: function (data) {
 
-            var json = "<h4>Ajax Response</h4><pre>"
-                + JSON.stringify(data, null, 4) + "</pre>";
+            var json = "<h4>Order</h4><h1>Created</h1><button class='btn btn-primary'><a href='/api/orders' style='color: white;'>See the order</a></button>";
+
 
             $('#message').html(json);
-            $('#ajaxreader').removeClass("d-none")
-            $('#ajaxreader').addClass("alert alert-success alert-dismissible fade show")
+
+            styles("success")
 
 
         },
-        error: function (e) {
-
-            var json = "<h4>Ajax Response</h4><pre>"
-                + e.responseText + "</pre>";
+        error: function () {
+            var json = "<h4>Order</h4><button class='btn btn-primary'>Not Created</button>";
             $('#message').html(json);
-            $('#ajaxreader').removeClass("d-none")
-            $('#ajaxreader').addClass("alert alert-danger alert-dismissible fade show")
-
+            styles("danger")
 
 
         }
@@ -99,8 +98,23 @@ function buy(){
 
 }
 
+function styles(mode) {
+    $('#ajaxreader').removeClass("d-none")
+    if (mode == "success") {
+        $('#ajaxreader').addClass("alert alert-success alert-dismissible fade show")
+    }else {
+        $('#ajaxreader').addClass("alert alert-danger alert-dismissible fade show")
+
+    }
+    $('#ajaxreader').addClass("alert alert-success alert-dismissible fade show")
+    $('body>*').not($('#layer')).css("opacity","0.5")
+
+
+}
+
+
 function resetCart() {
-    products=[]
+    products = []
     $('#overall').val(parseInt(0));
     let item = $('#items').text();
     if (item != 'No items selected') {
@@ -111,6 +125,11 @@ function resetCart() {
         $('.options').addClass("d-none");
 
     }
+}
+function action2(){
+    $('#ajaxreader').addClass('d-none');
+    $('body>*').css("opacity","1")
+
 }
 
 

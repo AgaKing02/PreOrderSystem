@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
-<link rel="icon" href="https://www.flaticon.com/premium-icon/icons/svg/562/562678.svg">
 
 <head>
     <meta charset="utf-8">
@@ -37,8 +36,8 @@
 
 <body>
 <div th:insert="blocks/header :: header"/>
+<div th:insert="blocks/carousel :: carousel" />
 
-<div th:insert="blocks/blog :: blog"/>
 <div class="container-fluid text-center">
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 text-center shadow rounded pt-5 my-5" th:each="food : ${foods}">
