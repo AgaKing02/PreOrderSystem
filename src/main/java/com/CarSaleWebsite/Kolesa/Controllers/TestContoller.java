@@ -47,41 +47,6 @@ public class TestContoller {
     }
 
 
-    @GetMapping("/test")
-    public String test() throws JsonProcessingException {
-
-        OrderProductDto dto = new OrderProductDto();
-        int quantity = 3;
-        FoodDto food = new FoodDto();
-        food.setName("Whopper");
-        dto.setProduct(food);
-        dto.setQuantity(quantity);
-
-
-        OrderProductDto dto2 = new OrderProductDto();
-        int quantity2 = 5;
-        FoodDto food2 = new FoodDto();
-        food2.setName("Coca-Cola");
-        dto2.setProduct(food2);
-        dto2.setQuantity(quantity2);
-
-
-        List<OrderProductDto> list = new LinkedList<>();
-        list.add(dto);
-        list.add(dto2);
-
-
-        PurchaseController.OrderForm form = new PurchaseController.OrderForm();
-        form.setProductOrders(list);
-
-
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonString = mapper.writeValueAsString(form);
-
-        return jsonString;
-    }
-
-
     @PostMapping("/api/test")
     public ResponseEntity<?> create(@RequestBody PurchaseController.OrderForm form, Errors errors, Principal principal) throws JsonProcessingException {
         AjaxResponseBody result = new AjaxResponseBody();
@@ -140,7 +105,9 @@ public class TestContoller {
 
 
         if (!CollectionUtils.isEmpty(list)) {
-            new ResourceNotFoundException("Product not found");
+           throw new ResourceNotFoundException("Product not found");
         }
     }
+
+
 }
