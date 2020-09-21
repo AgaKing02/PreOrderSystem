@@ -18,8 +18,8 @@
 <div th:insert="blocks/header :: header"/>
 <div class="container">
     <div class="row">
-        <button th:id="${c}" th:class="'col-2 btn btn-'+${colors.get(iter.index)}+' m-1'"
-                th:each="c,iter :${categories}" th:text="${c}" onclick="action(this.id)"/>
+        <button th:id="${category}" th:class="'col-2 btn btn-'+${colors.get(count.index)}+' m-1'"
+                th:each="category,count :${categories}" th:text="${category}" onclick="action(this.id)"/>
 
     </div>
 </div>
