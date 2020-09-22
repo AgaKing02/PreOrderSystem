@@ -4,6 +4,8 @@ import com.CarSaleWebsite.Kolesa.DTO.AjaxResponseBody;
 import com.CarSaleWebsite.Kolesa.DTO.FoodDto;
 import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
 import com.CarSaleWebsite.Kolesa.Exceptions.ResourceNotFoundException;
+import com.CarSaleWebsite.Kolesa.Functions.ValidationExistence;
+import com.CarSaleWebsite.Kolesa.Functions.interfaces.ValidateExistence;
 import com.CarSaleWebsite.Kolesa.Models.Order;
 import com.CarSaleWebsite.Kolesa.Models.OrderFood;
 import com.CarSaleWebsite.Kolesa.Models.OrderStatus;
@@ -64,7 +66,10 @@ public class TestContoller {
            return ResponseEntity.badRequest().body("User not found");
         }
         List<OrderProductDto> formDtos = form.getProductOrders();
-        validateProductsExistence(formDtos);
+
+        ValidateExistence validateExistence=new ValidationExistence();
+        validateExistence.validateExistence(formDtos,productService);
+
         Order order = new Order();
         order.setStatus(OrderStatus.PAID.name());
         order.setUser(usersRepository.findByUsername(principal.getName()));
@@ -96,18 +101,7 @@ public class TestContoller {
 
 
            }
-    private void validateProductsExistence(List<OrderProductDto> orderProducts) {
-        List<OrderProductDto> list = orderProducts
-                .stream()
-                .filter(op -> Objects.isNull(productService.getProduct(op.getProduct().getName()))).collect(Collectors.toList());
 
-
-
-
-        if (!CollectionUtils.isEmpty(list)) {
-           throw new ResourceNotFoundException("Product not found in db");
-        }
-    }
 
 
 }
