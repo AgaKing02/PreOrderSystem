@@ -11,10 +11,16 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="icon" href="https://www.flaticon.com/premium-icon/icons/svg/562/562678.svg">
+<!--    <link rel="stylesheet" href="Loader.css">-->
 
 
 </head>
+
 <body>
+<div class="loadingio-spinner-bars-zksmzu3epn"><div class="ldio-4uexza1frsr">
+    <div></div><div></div><div></div><div></div>
+</div></div>
+
 <div th:insert="blocks/header :: header"/>
 <div class="container">
     <div class="row">
@@ -35,7 +41,7 @@
     <!--              d="M6.146 6.146a.5.5 0 0 1 .708 0L8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 0 1 0-.708z"/>-->
     <!--    </svg>-->
     <div class="row" id="row">
-        <div th:class="'col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 text-center shadow rounded pt-3 mr-1 '+${food.getCategory()}+' d-none'"
+        <div th:class="'col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 text-center shadow rounded pt-3 mr-1 '+${food.getCategory()}+' d-none'"
              th:each="food : ${foodList}">
 
             <img th:src="${food.getImage_url()}" th:alt="${food.getName()}" style="height: 200px;max-width: 200px;">
@@ -135,7 +141,7 @@
     </div>
 
 </footer>
-<div class="text-warning text-center border border-dark p-2 rounded"  sec:authorize="isAnonymous()">
+<div class="text-warning text-center border border-dark p-2 rounded" sec:authorize="isAnonymous()">
     <p>You can not order unless you are not authenticated</p>
 </div>
 <div class="container" id="layer" style="
@@ -159,7 +165,10 @@
 
 <footer th:insert="blocks/footer :: footer"/>
 
+
+
 </body>
 <script src="CatalogFunctions.js"></script>
+
 
 </html>
