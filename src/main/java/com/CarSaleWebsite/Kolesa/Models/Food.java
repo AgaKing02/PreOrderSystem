@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long ID;
+    public Long food_id;
 
     @Column(nullable = false,unique = true)
     public String name;
@@ -83,18 +83,14 @@ public class Food {
         this.category = category;
     }
 
-    public long getID() {
-        return ID;
-    }
-
-    public void setID(Long ID) {
-        this.ID = ID;
+    public Long getFood_id() {
+        return food_id;
     }
 
     @Override
     public String toString() {
         return "Food{" +
-                "ID=" + ID +
+                "food_id=" + food_id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
@@ -103,5 +99,4 @@ public class Food {
                 ", category='" + category + '\'' +
                 '}';
     }
-
 }
