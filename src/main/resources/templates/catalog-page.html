@@ -12,7 +12,38 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="icon" href="https://www.flaticon.com/premium-icon/icons/svg/562/562678.svg">
 <!--    <link rel="stylesheet" href="Loader.css">-->
+    <style>
+        .preloader {
+            width: 100%;
+            height: 100%;
+            background: white;
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            transition-duration: 3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        .loader {
+            width: 75px;
+            height: 75px;
+            border: 10px solid rgba(13, 71, 161, 0.6);;
+            border-radius: 50%;
+            border-left-color: #0D47A1;
+            animation: loader 1.3s linear infinite;
+        }
+
+        @keyframes loader {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .hide{
+            opacity: 0;
+        }
+    </style>
 
 </head>
 
