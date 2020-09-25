@@ -17,6 +17,7 @@ function minus(idd) {
     }
 }
 
+
 //{"productOrders":[{"product":{"name":"Whopper"},"quantity":3},{"product":{"name":"Coca-Cola"},"quantity":5}]}
 function create(product, quantity) {
     return '{"product":{"name":"' + product + '"},"quantity":' + quantity + '}';

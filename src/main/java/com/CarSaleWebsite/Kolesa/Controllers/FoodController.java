@@ -71,18 +71,36 @@ public class FoodController {
         return "detailed-view-food";
 
     }
+//
+//    @GetMapping("/catalog")
+//    public String catalogPage(Model model) {
+//        Iterable<Food> foodList = foodRepository.findAll();
+//        List<String> categories = foodRepository.findAllCategories();
+//        List<String> colors = StringConfigurerFunctions.allColorsinBootstrap();
+//
+//        model.addAttribute("foodList", foodList);
+//
+//
+//        model.addAttribute("categories", categories);
+//        model.addAttribute("colors", colors);
+//
+//
+//        return "catalog-page";
+//
+//    }
 
     @GetMapping("/catalog")
-    public String catalogPage(Model model) {
+    public String catalogPagewithChair(@RequestParam(name = "chair",required = false) Long chair_id, Model model) {
         Iterable<Food> foodList = foodRepository.findAll();
         List<String> categories = foodRepository.findAllCategories();
         List<String> colors = StringConfigurerFunctions.allColorsinBootstrap();
 
         model.addAttribute("foodList", foodList);
 
-
+        model.addAttribute("chair",chair_id);
         model.addAttribute("categories", categories);
         model.addAttribute("colors", colors);
+
 
 
         return "catalog-page";
