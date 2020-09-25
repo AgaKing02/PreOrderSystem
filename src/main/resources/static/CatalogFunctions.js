@@ -67,7 +67,16 @@ function addToCart(idd) {
 
 }
 
+function animation() {
+    let preloader = document.querySelector('.preloader');
+    preloader.style.display='flex';
+    setTimeout(() => {
+        preloader.remove();
+    }, 600);
+}
+
 function buy() {
+    animation();
     var json = generate(products);
     $.ajax({
         type: "POST",

@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Food {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long ID;
 
     @Column(nullable = false,unique = true)
