@@ -11,7 +11,8 @@ import javax.validation.constraints.Min;
 public class DiningTables {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long table_id;
+    public Long ID;
+
     @Min(1)
     @Max(8)
     public int chair_count=1;
@@ -27,7 +28,7 @@ public class DiningTables {
     }
 
     public Long getTable_id() {
-        return table_id;
+        return ID;
     }
 
 

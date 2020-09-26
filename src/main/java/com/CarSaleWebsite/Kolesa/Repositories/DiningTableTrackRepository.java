@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface DiningTableTrackRepository extends CrudRepository<DiningTableTrack,Long> {
-//    @Query("select count(Order) from DiningTableTrack where DiningTableTrack.diningTables_id=?1")
-//    int CountofOrderByTableID(Long id);
+    @Query("select count(u.order_id) from DiningTableTrack u where u.diningTables_id=?1")
+    int CountofOrderByTableID(Long id);
 }

@@ -124,6 +124,11 @@ function styles(mode) {
 
 
 function resetCart() {
+    // if(sessionStorage.getItem("link")!=null){
+    //     window.location.href=sessionStorage.getItem("link");
+    //
+    // }
+
     products = []
     $('#overall').val(parseInt(0));
     let item = $('#items').text();
@@ -136,12 +141,9 @@ function resetCart() {
 
     }
 }
-function action2(){
+function action2() {
     $('#ajaxreader').addClass('d-none');
-    $('body>*').css("opacity","1")
+    $('body>*').css("opacity", "1")
 
 }
-
-
-
 

@@ -1,7 +1,9 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
 import com.CarSaleWebsite.Kolesa.Functions.StringConfigurerFunctions;
+import com.CarSaleWebsite.Kolesa.Models.DiningTables;
 import com.CarSaleWebsite.Kolesa.Models.Food;
+import com.CarSaleWebsite.Kolesa.Repositories.DiningTablesRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.FoodRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +21,11 @@ import java.util.List;
 @Controller
 public class FoodController {
     private final FoodRepository foodRepository;
+    private final DiningTablesRepository diningTablesRepository;
 
-    public FoodController(FoodRepository foodRepository) {
+    public FoodController(FoodRepository foodRepository, DiningTablesRepository diningTablesRepository) {
         this.foodRepository = foodRepository;
+        this.diningTablesRepository = diningTablesRepository;
     }
 
     @GetMapping("/order/{id}")
@@ -90,17 +94,19 @@ public class FoodController {
 //    }
 
     @GetMapping("/catalog")
-    public String catalogPagewithChair(@RequestParam(name = "chair",required = false) Long chair_id, Model model) {
+    public String catalogPagewithChair(@RequestParam(name = "chair", required = false, defaultValue = "0") Long chair_id, Model model) {
         Iterable<Food> foodList = foodRepository.findAll();
         List<String> categories = foodRepository.findAllCategories();
         List<String> colors = StringConfigurerFunctions.allColorsinBootstrap();
 
         model.addAttribute("foodList", foodList);
 
-        model.addAttribute("chair",chair_id);
+        DiningTables diningTables = diningTablesRepository.findByID(chair_id);
+        if (diningTables != null) {
+            model.addAttribute("chair", diningTables);
+        }
         model.addAttribute("categories", categories);
         model.addAttribute("colors", colors);
-
 
 
         return "catalog-page";
