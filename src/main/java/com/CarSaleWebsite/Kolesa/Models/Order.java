@@ -16,7 +16,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long order_id;
+    private Long ID;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateCreated;
@@ -73,12 +73,8 @@ public class Order {
         this.orderProducts = orderProducts;
     }
 
-    public Long getId() {
-        return order_id;
-    }
-
-    public Long getOrder_id() {
-        return order_id;
+    public Long getID() {
+        return ID;
     }
 
     @Transient
@@ -102,7 +98,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "order_id=" + order_id +
+                "order_id=" + ID +
                 ", dateCreated=" + dateCreated +
                 ", status='" + status + '\'' +
                 '}';

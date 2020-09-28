@@ -71,7 +71,7 @@ public class TestContoller {
         validateExistence.validateExistence(formDtos,productService);
 
         Order order = new Order();
-        order.setStatus(OrderStatus.PAID.name());
+        order.setStatus(OrderStatus.WAITING.name());
         order.setUser(usersRepository.findByUsername(principal.getName()));
         order = this.orderService.create(order);
 

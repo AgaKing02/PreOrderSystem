@@ -69,7 +69,7 @@ public class PurchaseController {
         String uri = ServletUriComponentsBuilder
                 .fromCurrentServletMapping()
                 .path("/orderlist/{id}")
-                .buildAndExpand(order.getId())
+                .buildAndExpand(order.getID())
                 .toString();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", uri);
