@@ -15,10 +15,18 @@
 <h1>My Orders</h1>
 <div class="container">
     <div th:each="order:${orders}" class="border border-success m-3 p-2">
+        <p>Date Created</p>
         <h3 th:text="${order.getDateCreated()}"/><br><br>
-        <h4 th:text="${order.getOrderProductsString().toString()}"/><br><br>
+        <div class="row">
+            <div th:each="food:${order.getOrderProducts()}" class="col-2">
+                <p th:text="${food.getProduct().getName()}"/>
+                <p th:text="${food.getQuantity()}"/>
+            </div>
+
+        </div>
+        <h3>Total:</h3>
         <h4 th:text="${order.getTotalOrderPrice()}"/><br><br>
-        <a class="btn btn-primary" th:href="'/checkout/'+${order.getID()}">Pay</a>
+        <a class="text-right btn btn-primary" th:href="'/checkout/'+${order.getID()}">Pay</a>
     </div>
 </div>
 <footer th:insert="blocks/footer :: footer"/>

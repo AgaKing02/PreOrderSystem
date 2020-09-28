@@ -32,11 +32,11 @@ public class CheckoutController {
         if (check == null) {
             return "redirect:/";
         }
-        int price = (int) (check.getTotalOrderPrice() / 430);
+        int price = (int) (check.getTotalOrderPrice() / 1);
 
         model.addAttribute("amount", price); // in cents
         model.addAttribute("stripePublicKey", stripePublicKey);
-        model.addAttribute("currency", ChargeRequest.Currency.USD);
+        model.addAttribute("currency", ChargeRequest.Currency.KZT);
         return "checkout";
     }
 }

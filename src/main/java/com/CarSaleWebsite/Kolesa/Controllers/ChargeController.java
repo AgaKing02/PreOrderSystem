@@ -22,7 +22,7 @@ public class ChargeController {
     public String charge(ChargeRequest chargeRequest, Model model)
             throws StripeException {
         chargeRequest.setDescription("Example charge");
-        chargeRequest.setCurrency(ChargeRequest.Currency.USD);
+        chargeRequest.setCurrency(ChargeRequest.Currency.KZT);
         Charge charge = null;
         try {
             charge = paymentsService.charge(chargeRequest);
