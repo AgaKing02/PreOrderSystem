@@ -26,7 +26,13 @@
         </div>
         <h3>Total:</h3>
         <h4 th:text="${order.getTotalOrderPrice()}"/><br><br>
-        <a class="text-right btn btn-primary" th:href="'/checkout/'+${order.getID()}">Pay</a>
+        <h3 th:text="${order.getStatus()}"/>
+        <div class="row">
+            <div class="col-4"></div>
+            <div th:if="${order.getStatus()!='PAID'}" class="col-4 text-center"><a class="text-center btn btn-primary" th:href="'/checkout/'+${order.getID()}">Pay</a>
+            </div>
+            <div class="col-4"></div>
+        </div>
     </div>
 </div>
 <footer th:insert="blocks/footer :: footer"/>

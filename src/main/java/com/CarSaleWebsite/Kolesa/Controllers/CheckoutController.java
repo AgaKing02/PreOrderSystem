@@ -35,6 +35,7 @@ public class CheckoutController {
         int price = (int) (check.getTotalOrderPrice() / 1);
 
         model.addAttribute("amount", price); // in cents
+        model.addAttribute("orderid",check.getID());
         model.addAttribute("stripePublicKey", stripePublicKey);
         model.addAttribute("currency", ChargeRequest.Currency.KZT);
         return "checkout";

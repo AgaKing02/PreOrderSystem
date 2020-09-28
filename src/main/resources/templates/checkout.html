@@ -131,7 +131,7 @@
             <div class="col-lg-4">
                 <div class="card mb-5 mb-lg-0">
                     <div class="card-body">
-                        <form class="form-signin" action='/charge' method='POST' id='checkout-form'>
+                        <form class="form-signin" th:action="'/charge/'+${orderid}" method='POST' id='checkout-form'>
                             <div class="form-label-group text-center">
                                 <input type='hidden' th:value='${amount*100}' name='amount'/>
                                 <label>Price:<h2 th:text="${amount}+' KZT'"/></label>

@@ -10,5 +10,6 @@ public interface OrderRepository extends CrudRepository<Order,Long> {
 
     List<Order> findByUserUsername(String user_username);
     Order findByIDAndUserUsername(Long ID, String user_username);
+    Order findByID(Long ID);
 
 }
