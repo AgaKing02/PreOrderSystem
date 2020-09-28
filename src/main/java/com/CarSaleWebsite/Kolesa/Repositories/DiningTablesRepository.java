@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface DiningTablesRepository extends CrudRepository<DiningTables, Long> {
     DiningTables findByID(Long ID);
+
 }

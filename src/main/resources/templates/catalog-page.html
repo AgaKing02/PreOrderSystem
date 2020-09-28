@@ -49,21 +49,22 @@
 </div>
 
 <div th:insert="blocks/header :: header"/>
-<div class="p-3 border border-warning mb-2 text-center rounded shadow" th:if="${chair!=null}">
+<div class="text-center" th:if="${chair!=null}">
     <div class="row">
         <div class="col-4"></div>
-        <div class="col-4">
-            <h1>You are sitting on </h1>
-          <span>
-              <h1 th:text="${chair.getTable_id()}"/>
-              <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-grid-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/>
-        </svg>
-          </span>
 
-
-        </div>
         <div class="col-4"></div>
+        <div class="col-4 p-3 mb-2 rounded shadow">
+            <h3>You are sitting on </h3>
+            <span>
+              <b><span style="font-size: 40px;" th:text="${chair.getTable_id()}"/></b>
+                <!--              <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-grid-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">-->
+                <!--            <path fill-rule="evenodd" d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/>-->
+                <!--        </svg>-->
+              <img style="height: 40px;width: 40px;margin-bottom: 18px;"
+                   src="http://simpleicon.com/wp-content/uploads/table.png" alt="chair">
+          </span>
+        </div>
     </div>
 
 </div>
@@ -186,9 +187,7 @@
     </div>
 
 </footer>
-<div class="text-warning text-center border border-dark p-2 rounded" sec:authorize="isAnonymous()">
-    <p>You can not order unless you are not authenticated</p>
-</div>
+<div th:insert="blocks/authentication :: order"/>
 <div class="container" id="layer" style="
   position: fixed;
   top: 50%;

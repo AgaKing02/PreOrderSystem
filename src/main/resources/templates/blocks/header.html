@@ -5,7 +5,7 @@
         <a class="p-2 text-dark" href="/">Main</a>
         <a class="p-2 text-dark" href="/profile" sec:authorize="isAuthenticated()">My Profile</a>
         <a class="p-2 text-dark" href="/api/orders" sec:authorize="isAuthenticated()">My Order</a>
-        <a class="p-2 text-dark" href="/catalog">Order</a>
+        <button class="text text-dark p-2" onclick="aga()">Order</button>
         <a class="p-2 text-dark" href="/users" sec:authorize="hasRole('ROLE_ADMIN')">Users</a>
         <a class="p-2 text-dark" href="/users/add" sec:authorize="hasRole('ROLE_ADMIN')">Add User</a>
         <a class="p-2 text-dark" href="/food/add" sec:authorize="hasRole('ROLE_ADMIN')">Add Food</a>
@@ -15,6 +15,5 @@
     </nav>
     <a class="btn btn-outline-primary" href="/login" sec:authorize="isAnonymous()">Sign in</a>
     <a class="btn btn-outline-danger" href="/logout"  sec:authorize="isAuthenticated()" >Sign out</a>
-    
 
 </div>
