@@ -51,7 +51,10 @@ public class MainController {
 
     @GetMapping("/profile")
     public String profilePage(Model model, Principal principal) {
+        Usr auth=usersRepository.findByUsername(principal.getName());
+        String role=auth.getRoles();
         model.addAttribute("authuser", principal.getName());
+        model.addAttribute("role",role);
         return "profile-page";
     }
 
