@@ -31,7 +31,6 @@ public class ChargeController {
     @PostMapping("/charge/{order}")
     public String charge(@PathVariable(name = "order") Long order_id, ChargeRequest chargeRequest, Model model)
             throws StripeException {
-        chargeRequest.setDescription("Example charge");
         chargeRequest.setCurrency(ChargeRequest.Currency.KZT);
         Charge charge = null;
         try {
@@ -39,6 +38,7 @@ public class ChargeController {
 
             Order paid=orderRepository.findByID(order_id);
             paid.setStatus(OrderStatus.PAID.name());
+            chargeRequest.setDescription("Example charge"+paid.toString());
             orderRepository.save(paid);
 
         } catch (AuthenticationException e) {

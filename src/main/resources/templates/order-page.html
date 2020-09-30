@@ -94,39 +94,48 @@
 </head>
 <body>
 <header th:insert="blocks/header :: header"/>
-<h1>My Orders</h1>
+<h1 class="text-center">My Orders</h1>
 <div class="container">
-    <div th:each="order:${orders}" class="border border-secondary m-3 p-2 shadow ">
-        <p>Date Created</p>
-        <h3 th:text="${order.getDateCreated()}"/><br><br>
+    <div th:each="order:${orders}" class="border border-secondary m-3 p-3 shadow rounded ">
         <div class="row">
             <div th:each="food:${order.getOrderProducts()}" class="col-2">
+                <img style="height: 150px;width: 130px" th:src="${food.getProduct().getImage_url()}" th:alt="${food.getProduct().getCategory()}">
                 <p th:text="${food.getProduct().getName()}"/>
-                <p th:text="${food.getQuantity()}"/>
+                <p th:text="${food.getQuantity()}+' dana'"/>
+                <br>
+                <b>Price :<p th:text="${food.getProduct().getPrice()}"/></b>
             </div>
 
+            <div class="col-2 shadow ml-auto mt-auto mb-3 text-center mr-3"><h3>Total:</h3>
+                <h4 th:text="${order.getTotalOrderPrice()}"/>
+                <h3 th:text="${order.getStatus()}"/>
+            </div>
         </div>
-        <h3>Total:</h3>
-        <h4 th:text="${order.getTotalOrderPrice()}"/><br><br>
-        <h3 th:text="${order.getStatus()}"/>
+
+
         <div class="row">
+            <div class="col-4"><p>Date Created</p>
+                <h3 th:text="${order.getDateCreated()}"/></div>
             <div class="col-4"></div>
-            <div class="col-4"></div>
-            <div th:if="${order.getStatus()!='PAID'}" class="col-4 text-right">
+
+            <div th:if="${order.getStatus()!='PAID'}" class="col-4  mt-auto text-right">
+                <form class="m-1 " th:action="'/api/orders/remove/'+${order.getID()}" method="post" name="remove">
+                    <input  type="submit" value="Remove" class="btn btn-danger">
+                </form>
                 <a style="font-size: 16px;" class="text-center btn btn-primary" th:href="'/checkout/'+${order.getID()}">Pay
-                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-credit-card" fill="currentColor"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                          d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
-                    <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
-                </svg>
-            </a>
+                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-credit-card" fill="currentColor"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
+                        <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
+                    </svg>
+                </a>
 
             </div>
 
-            <div th:if="${order.getStatus()=='PAID'}" class="col-4 text-right">
-                <button class="btn btn-warning ">
-                    <div class="row">
+            <div th:if="${order.getStatus()=='PAID'}" class="col-4  text-right mt-auto">
+                <button class="btn btn-warning shadow-sm">
+                    <div class="row ">
                         <div class="loadingio-spinner-dual-ring-4ucapmn0rl9">
                             <div class="ldio-qd9d3vhnsvf">
                                 <div></div>

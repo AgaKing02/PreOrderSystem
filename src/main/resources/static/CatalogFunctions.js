@@ -87,22 +87,14 @@ function buy() {
         dataType: 'json',
         cache: false,
         timeout: 600000, success: function (data) {
-
             var json = "<h4>Order</h4><h1>Created</h1><button class='btn btn-primary'><a href='/api/orders' style='color: white;'>See the order</a></button>";
-
-
             $('#message').html(json);
-
             styles("success")
-
-
         },
-        error: function () {
-            var json = "<h4>Order</h4><button class='btn btn-primary'>Not Created</button>";
+        error: function (jqXHR, error, errorThrown) {
+            var json = "<h4>Order</h4><button class='btn btn-primary'>" + jqXHR.responseText + "</button>";
             $('#message').html(json);
             styles("danger")
-
-
         }
     });
 
@@ -147,13 +139,15 @@ function action2() {
     $('body>*').css("opacity", "1")
 
 }
+
 // localhost:8081/catalog?chair=2
 
 function beka() {
-    if (window.location.href.substr(-7,5)==="chair") {
+    if (window.location.href.substr(-7, 5) === "chair") {
         createCookie("bekzat", window.location.href, 1);
     }
 }
+
 beka();
 
 
@@ -205,6 +199,15 @@ function readCookie(name) {
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
+}
+
+function deleteOrder(id) {
+    var form = document.getElementById("delete-form " + id);
+    var choice = confirm("The order would be deleted");
+    if (choice) {
+        form.submit();
+    }
+
 }
 
 

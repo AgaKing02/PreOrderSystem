@@ -1,15 +1,14 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
 import com.CarSaleWebsite.Kolesa.DTO.AjaxResponseBody;
-import com.CarSaleWebsite.Kolesa.DTO.FoodDto;
 import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
-import com.CarSaleWebsite.Kolesa.Exceptions.ResourceNotFoundException;
 import com.CarSaleWebsite.Kolesa.Functions.ValidationExistence;
 import com.CarSaleWebsite.Kolesa.Functions.interfaces.ValidateExistence;
 import com.CarSaleWebsite.Kolesa.Models.Order;
 import com.CarSaleWebsite.Kolesa.Models.OrderFood;
 import com.CarSaleWebsite.Kolesa.Models.OrderStatus;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderFoodRepository;
+import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.UsersRepository;
 import com.CarSaleWebsite.Kolesa.Services.OrderProductServiceImpl;
 import com.CarSaleWebsite.Kolesa.Services.OrderServiceImpl;
@@ -18,18 +17,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -39,13 +34,15 @@ public class TestContoller {
     private final UsersRepository usersRepository;
     private final OrderServiceImpl orderService;
     private final OrderFoodRepository orderFoodRepository;
+    private final OrderRepository orderRepository;
 
-    public TestContoller(OrderProductServiceImpl orderProductService, ProductService productService, UsersRepository usersRepository, OrderServiceImpl orderService, OrderFoodRepository orderFoodRepository) {
+    public TestContoller(OrderProductServiceImpl orderProductService, ProductService productService, UsersRepository usersRepository, OrderServiceImpl orderService, OrderFoodRepository orderFoodRepository, OrderRepository orderRepository) {
         this.orderProductService = orderProductService;
         this.productService = productService;
         this.usersRepository = usersRepository;
         this.orderService = orderService;
         this.orderFoodRepository = orderFoodRepository;
+        this.orderRepository = orderRepository;
     }
 
 
@@ -62,7 +59,12 @@ public class TestContoller {
             return ResponseEntity.badRequest().body(result);
 
         }
-        if(principal.getName().isEmpty()){
+        if(orderRepository.findCountofOrderByUsername(principal.getName())>=2){
+
+            return  ResponseEntity.badRequest().body("Firstly pay the waiting orders");
+        }
+
+            if(principal.getName().isEmpty()){
            return ResponseEntity.badRequest().body("User not found");
         }
         List<OrderProductDto> formDtos = form.getProductOrders();
