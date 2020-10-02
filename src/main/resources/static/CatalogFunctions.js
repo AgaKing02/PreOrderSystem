@@ -93,7 +93,6 @@ function animation() {
 
 function buy() {
     var json = generate(products);
-    alert(json)
     animation();
 
     $.ajax({
