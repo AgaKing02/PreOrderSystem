@@ -6,7 +6,9 @@ function action(classname) {
 function plus(idd) {
 
     let value = parseInt($("input[name='count']#" + idd).val());
-    $('input#' + idd).val(value + 1);
+    if (value < 10) {
+        $('input#' + idd).val(value + 1);
+    }
 }
 
 function minus(idd) {
@@ -27,7 +29,7 @@ function generate(productArray) {
     let empty = '{"productOrders":[';
 
     for (let i = 0; i < productArray.length; i++) {
-        if (productArray.length - 1 == i) {
+        if (productArray.length - 1 === i) {
             empty += productArray[i];
         } else {
             empty += productArray[i] + ',';
@@ -43,17 +45,30 @@ var products = [];
 
 function addToCart(idd) {
     let count = parseInt($("input[name='count']#" + idd).val());
+    let price = parseInt($("input." + idd).val());
 
 
     if (count > 0) {
         let product = create(idd, count);
+        for (let i = 0; i < products.length; i++) {
+            let food = JSON.parse(products[i]);
+            if (food.product.name === idd) {
+                $('#overall').val($('#overall').val() - price * food.quantity);
+                document.getElementById("cart-item " + idd).remove();
+                products.splice(i, 1);
+            }
+        }
         products.push(product);
-        let price = parseInt($("input." + idd).val());
+
+        // let food = JSON.parse(products[0]);
+        // alert(food.product.name)
+
         let item = $('#items').text();
-        if (item == 'No items selected') {
+        if (item === 'No items selected') {
             $('#items').text("");
         }
-        $('#items').append('<br>' + idd + ' x ' + count + ' overall: ' + count * price + ' tg');
+
+        $('#items').append('<span id="cart-item ' + idd + '" ><b>' + idd + '</b> x ' + count + ' dana : <b>' + count * price + '</b> tg' + '<br></span>');
         $('#overall').val(parseInt($('#overall').val()) + count * price);
         $('#overall').removeClass("d-none");
         $('#over').removeClass("d-none");
@@ -77,8 +92,10 @@ function animation() {
 }
 
 function buy() {
-    animation();
     var json = generate(products);
+    alert(json)
+    animation();
+
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -86,15 +103,20 @@ function buy() {
         data: json,
         dataType: 'json',
         cache: false,
-        timeout: 600000, success: function (data) {
-            var json = "<h4>Order</h4><h1>Created</h1><button class='btn btn-primary'><a href='/api/orders' style='color: white;'>See the order</a></button>";
+        timeout: 600000,
+        success: function (data) {
+            var json = "<h4>Order</h4>" +
+                "<h1>Created</h1>" +
+                "<button class='btn btn-primary'>" +
+                "<a href='/api/orders' style='color: white;'>See the order</a>" +
+                "</button>";
             $('#message').html(json);
-            styles("success")
+            styles("success");
         },
         error: function (jqXHR, error, errorThrown) {
             var json = "<h4>Order</h4><button class='btn btn-primary'>" + jqXHR.responseText + "</button>";
             $('#message').html(json);
-            styles("danger")
+            styles("danger");
         }
     });
 
@@ -148,7 +170,7 @@ function beka() {
     }
 }
 
-beka();
+// beka();
 
 
 function aga() {
@@ -179,6 +201,7 @@ function aga() {
 //     }
 // }
 
+
 function createCookie(name, value, days) {
     if (days) {
         var date = new Date();
@@ -193,10 +216,10 @@ function readCookie(name) {
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == ' ') {
+        while (c.charAt(0) === ' ') {
             c = c.substring(1, c.length);
         }
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
 }

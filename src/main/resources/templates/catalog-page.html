@@ -99,7 +99,6 @@
             <b><h3 th:id="${food.getName()}" th:text="${food.getPrice()}+'tg'"/></b>
             <input type="number" th:class="'d-none '+${food.getName()}" name="price" th:value="${food.getPrice()}">
             <p>Cart:</p>
-            <br>
             <div class="row">
                 <div class="col-4 text-center">
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-dash-square  btn-outline-info"
@@ -142,7 +141,7 @@
     </div>
 </div>
 
-<footer class="footer mt-auto py-3">
+<footer class="footer mt-5 py-3">
     <div class="container border border-dark rounded shadow">
         <div class="row p-1">
             <div class="col-3 col-xs-12">

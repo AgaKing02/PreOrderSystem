@@ -9,7 +9,7 @@
                             <h4 class="card-title">User Profile</h4>
                         </div>
                         <div class="card-body user-profile-card mb-3">
-                            <img  class="user-profile-image rounded-circle" alt="" />
+                            <img src="https://stuki-druki.com/biofoto/Aruzhan-Dzhazilbekova-01.jpg" th:if="${authuser=='Aruzhan'}" class="user-profile-image rounded-circle" alt="" />
                             <h4 th:text="${authuser}" class="text-center h6 mt-2"/>
                             <p th:text="${role}" class="text-center small"/>
                             <button class="btn btn-theme btn-sm">Follow</button>
