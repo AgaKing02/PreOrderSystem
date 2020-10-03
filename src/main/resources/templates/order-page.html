@@ -94,8 +94,9 @@
 </head>
 <body>
 <header th:insert="blocks/header :: header"/>
-<h1 class="text-center">My Orders</h1>
+<h1 th:if="${#lists.size(orders)>0}" class="text-center">My Orders</h1>
 <div class="container">
+    <div class="text-center" th:if="${#lists.size(orders)==0}"><h1 class="text-center bg-warning rounded p-2">No orders yet</h1></div>
     <div th:each="order:${orders}" class="border border-secondary m-3 p-3 shadow rounded ">
         <div class="row">
             <div th:each="food:${order.getOrderProducts()}" class="col-lg-2 text-center col-sm-3 col-xs-4">

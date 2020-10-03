@@ -45,10 +45,10 @@ public class ChargeController {
             e.printStackTrace();
         }
 
-        model.addAttribute("id", charge.getId());
-        model.addAttribute("status", charge.getStatus());
-        model.addAttribute("chargeId", charge.getId());
-        model.addAttribute("balance_transaction", charge.getBalanceTransaction());
+        model.addAttribute("id", charge != null ? charge.getId() :null);
+        model.addAttribute("status", charge != null ? charge.getStatus() : null);
+        model.addAttribute("chargeId", charge != null ? charge.getId() :null);
+        model.addAttribute("balance_transaction", charge != null ? charge.getBalanceTransaction() : null);
         return "result";
     }
 
