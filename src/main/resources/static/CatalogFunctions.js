@@ -25,6 +25,10 @@ function create(product, quantity) {
     return '{"product":{"name":"' + product + '"},"quantity":' + quantity + '}';
 }
 
+function createFood(product, quantity, price) {
+    return '{"product":{"name":"' + product + '"},"quantity":' + quantity + ',"price":' + price + '}';
+}
+
 function generate(productArray) {
     let empty = '{"productOrders":[';
 
@@ -42,6 +46,7 @@ function generate(productArray) {
 }
 
 var products = [];
+var saveProducts = [];
 
 function addToCart(idd) {
     let count = parseInt($("input[name='count']#" + idd).val());
@@ -50,15 +55,19 @@ function addToCart(idd) {
 
     if (count > 0) {
         let product = create(idd, count);
+        let saveProduct = createFood(idd, count, price);
+
         for (let i = 0; i < products.length; i++) {
             let food = JSON.parse(products[i]);
             if (food.product.name === idd) {
                 $('#overall').val($('#overall').val() - price * food.quantity);
                 document.getElementById("cart-item " + idd).remove();
                 products.splice(i, 1);
+                saveProducts.splice(i, 1);
             }
         }
         products.push(product);
+        saveProducts.push(saveProduct);
 
         // let food = JSON.parse(products[0]);
         // alert(food.product.name)
@@ -91,8 +100,56 @@ function animation() {
     }, 600);
 }
 
+function checkSaveProducts() {
+    alert("working")
+    if (readCookie("saveProducts") != null) {
+        alert("not null")
+        let save = readCookie("saveProducts");
+        var items=[];
+        items.push(save);
+        save=JSON.parse(items[0]);
+        save=save.productOrders;
+        //{"product":{"name":"Whopper"},"quantity":1,"price":1000},{"product":{"name":"Pepsi-Cola"},"quantity":1,"price":350}
+        let savelength = parseInt(save.length);
+        noSelected();
+        for (let i = 0; i < savelength; i++) {
+            let saveProduct = save[i];
+            let idd = saveProduct.product.name;
+            let count = saveProduct.quantity;
+            let price = saveProduct.price;
+            let product = create(idd, count);
+            products.push(product);
+            jqueryFunction(idd, count, price);
+
+        }
+        jqueryFunction2()
+
+    }
+}
+
+function jqueryFunction(idd, count, price) {
+    $('#items').append('<span id="cart-item ' + idd + '" ><b>' + idd + '</b> x ' + count + ' dana : <b>' + count * price + '</b> tg' + '<br></span>');
+    $('#overall').val(parseInt($('#overall').val()) + count * price);
+}
+
+function jqueryFunction2() {
+
+    $('#overall').removeClass("d-none");
+    $('#over').removeClass("d-none");
+    $('#tg').removeClass("d-none");
+    $('.options').removeClass("d-none");
+}
+function noSelected(){
+    let item = $('#items').text();
+    if (item === 'No items selected') {
+        $('#items').text("");
+    }
+}
+
 function buy() {
     var json = generate(products);
+    var json2=generate(saveProducts);
+    createCookie("saveProducts", json2, 1);
     animation();
 
     $.ajax({

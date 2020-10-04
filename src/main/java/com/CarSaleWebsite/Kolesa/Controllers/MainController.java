@@ -73,6 +73,10 @@ public class MainController {
 
         return "redirect:/users";
     }
+    @GetMapping("/about")
+    public String aboutPage(){
+        return "about-page";
+    }
 
 
 
