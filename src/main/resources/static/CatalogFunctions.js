@@ -124,7 +124,6 @@ function checkSaveProducts() {
             }
             showContent()
         }else {
-            alert("going to be deleted")
             eraseCookie("saveProducts")
         }
     }
