@@ -101,9 +101,9 @@ function animation() {
 }
 
 function checkSaveProducts() {
-    alert("working")
     if (readCookie("saveProducts") != null) {
-        alert("not null")
+        let choice=confirm("You have unordered products.\nDo you want to continue?")
+        if(choice){
         let save = readCookie("saveProducts");
         var items=[];
         items.push(save);
@@ -119,20 +119,20 @@ function checkSaveProducts() {
             let price = saveProduct.price;
             let product = create(idd, count);
             products.push(product);
-            jqueryFunction(idd, count, price);
+            addProductInfo(idd, count, price);
 
         }
-        jqueryFunction2()
-
+        showContent()
+        }
     }
 }
 
-function jqueryFunction(idd, count, price) {
+function addProductInfo(idd, count, price) {
     $('#items').append('<span id="cart-item ' + idd + '" ><b>' + idd + '</b> x ' + count + ' dana : <b>' + count * price + '</b> tg' + '<br></span>');
     $('#overall').val(parseInt($('#overall').val()) + count * price);
 }
 
-function jqueryFunction2() {
+function showContent() {
 
     $('#overall').removeClass("d-none");
     $('#over').removeClass("d-none");
