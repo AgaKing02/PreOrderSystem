@@ -14,5 +14,7 @@ public interface OrderRepository extends CrudRepository<Order,Long> {
     Order findByID(Long ID);
     @Query("select count(o.ID) from Order o where o.user.username=?1 and o.status='WAITING'")
     int findCountofOrderByUsername(String username);
+    @Query("select o from Order o where o.user.username=?1 and o.status='PAID'")
+    List<Order> findOrdersByUsername(String username);
 
 }

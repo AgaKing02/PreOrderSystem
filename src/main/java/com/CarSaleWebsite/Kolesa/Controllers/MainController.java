@@ -2,8 +2,10 @@ package com.CarSaleWebsite.Kolesa.Controllers;
 
 
 import com.CarSaleWebsite.Kolesa.Models.Food;
+import com.CarSaleWebsite.Kolesa.Models.Order;
 import com.CarSaleWebsite.Kolesa.Models.Usr;
 import com.CarSaleWebsite.Kolesa.Repositories.FoodRepository;
+import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.DoubleSummaryStatistics;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -22,17 +27,20 @@ public class MainController {
     private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
     private final FoodRepository foodRepository;
+    private final OrderRepository orderRepository;
 
-    public MainController(UsersRepository usersRepository, PasswordEncoder passwordEncoder, FoodRepository foodRepository) {
+
+    public MainController(UsersRepository usersRepository, PasswordEncoder passwordEncoder, FoodRepository foodRepository, OrderRepository orderRepository) {
         this.usersRepository = usersRepository;
         this.passwordEncoder = passwordEncoder;
         this.foodRepository = foodRepository;
+        this.orderRepository = orderRepository;
     }
 
     @GetMapping("/")
     public String MainPage(Model model) {
-        Iterable<Food> foods=foodRepository.findAll();
-        model.addAttribute("foods",foods);
+        Iterable<Food> foods = foodRepository.findAll();
+        model.addAttribute("foods", foods);
         return "main-page";
     }
 
@@ -51,10 +59,15 @@ public class MainController {
 
     @GetMapping("/profile")
     public String profilePage(Model model, Principal principal) {
-        Usr auth=usersRepository.findByUsername(principal.getName());
-        String role=auth.getRoles();
+        Usr auth = usersRepository.findByUsername(principal.getName());
+        String role = auth.getRoles();
         model.addAttribute("authuser", principal.getName());
-        model.addAttribute("role",role);
+
+        List<Order> myOrders = orderRepository.findOrdersByUsername(principal.getName());
+        DoubleSummaryStatistics doubleSummaryStatistics = myOrders.stream().collect(Collectors.summarizingDouble(Order::getTotalOrderPrice));
+
+        model.addAttribute("statistics",doubleSummaryStatistics);
+        model.addAttribute("role", role);
         return "profile-page";
     }
 
@@ -68,16 +81,16 @@ public class MainController {
                                 @RequestParam String txtPassword,
                                 @RequestParam String role,
                                 @RequestParam String permission) {
-        Usr user= new Usr(txtUsername,passwordEncoder.encode(txtPassword),role,permission);
+        Usr user = new Usr(txtUsername, passwordEncoder.encode(txtPassword), role, permission);
         usersRepository.save(user);
 
         return "redirect:/users";
     }
+
     @GetMapping("/about")
-    public String aboutPage(){
+    public String aboutPage() {
         return "about-page";
     }
-
 
 
 }

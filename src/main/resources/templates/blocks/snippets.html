@@ -100,32 +100,28 @@
 <!--                                </div>-->
                             </li>
                             <li class="timeline-item">
-<!--                                <div class="card card-white grid-margin">-->
-<!--                                    <div class="card-body">-->
-<!--                                        <div class="timeline-item-header">-->
-<!--                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />-->
-<!--                                            <p>Veema Walkeror <span>uploaded a photo</span></p>-->
-<!--                                            <small>7 hours ago</small>-->
-<!--                                        </div>-->
-<!--                                        <div class="timeline-item-post">-->
-<!--                                            <p>totam rem aperiam, eaque ipsa quae ab illo inventore</p>-->
-<!--                                            <img src="img/post-img01.jpg" alt="" />-->
-<!--                                            <div class="timeline-options">-->
-<!--                                                <a href="#"><i class="fa fa-thumbs-up"></i> Like (22)</a>-->
-<!--                                                <a href="#"><i class="fa fa-comment"></i> Comment (7)</a>-->
-<!--                                                <a href="#"><i class="fa fa-share"></i> Share (9)</a>-->
-<!--                                            </div>-->
-<!--                                            <div class="timeline-comment">-->
-<!--                                                <div class="timeline-comment-header">-->
-<!--                                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />-->
-<!--                                                    <p>Memila moriya <small>1 hour ago</small></p>-->
-<!--                                                </div>-->
-<!--                                                <p class="timeline-comment-text">Explicabo Nemo enim ipsam voluptatem quia voluptas.</p>-->
-<!--                                            </div>-->
-<!--                                            <textarea class="form-control" placeholder="Replay"></textarea>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                <div class="card card-white grid-margin">
+                                    <div class="card-body">
+                                        <div class="timeline-item-header">
+                                            <h1>Statistics</h1>
+                                        </div>
+                                        <div th:if="${statistics.getCount()>0}" class="timeline-item-post text-center ">
+                                            <p>Average</p>
+                                            <h3 th:text="${statistics.getAverage()}+' tg '"/>
+                                            <p>Total</p>
+                                            <h3  th:text="${statistics.getCount()}+' orders'"/>
+                                            <p>Minimum</p>
+                                            <h3  th:text="${statistics.getMin()}+' tg'"/>
+                                            <p>Maximum</p>
+                                            <h3 th:text="${statistics.getMax()}+' tg'"/>
+                                            <p>Sum</p>
+                                            <h3  th:text="${statistics.getSum()}+' tg'"/>
+                                        </div>
+                                        <div th:if="${statistics.getCount()==0}" class="timeline-item-post text-center ">
+                                           <p class="text text-info">Statistics will be available after you pay orders</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>

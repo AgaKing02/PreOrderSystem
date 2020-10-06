@@ -68,6 +68,12 @@ public class TestContoller {
            return ResponseEntity.badRequest().body("User not found");
         }
         List<OrderProductDto> formDtos = form.getProductOrders();
+        if(!formDtos.isEmpty()){
+            result.setMessage("success");
+        }else{
+            result.setMessage("error");
+            return ResponseEntity.badRequest().body(result);
+        }
 
         ValidateExistence validateExistence=new ValidationExistence();
         validateExistence.validateExistence(formDtos,productService);
@@ -88,12 +94,7 @@ public class TestContoller {
         order.setOrderProducts(orderProducts);
         this.orderService.update(order);
 
-        if(!formDtos.isEmpty()){
-            result.setMessage("success");
-        }else{
-            result.setMessage("error");
-            return ResponseEntity.badRequest().body(result);
-        }
+
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(formDtos);
         result.setResult(jsonString);
