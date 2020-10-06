@@ -41,6 +41,7 @@ public class OrderController {
     @PostMapping("/api/orders/remove/{order}")
     public String deleteOrder(Principal principal, @PathVariable(name = "order") Long id){
         Order deletable=orderRepository.findByIDAndUserUsername(id,principal.getName());
+
         if(deletable.getStatus().equals("WAITING")){
             List<OrderFood> orderFoods=orderFoodRepository.findAllByOrderID(id);
             orderFoodRepository.deleteAll(orderFoods);

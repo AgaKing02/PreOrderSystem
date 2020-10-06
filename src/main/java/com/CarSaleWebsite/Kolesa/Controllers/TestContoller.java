@@ -85,7 +85,6 @@ public class TestContoller {
                                     order, productService.getProduct(
                                     dto.getProduct().getName()), dto.getQuantity())));
         }
-        orderProducts.forEach(orderFoodRepository::save);
         order.setOrderProducts(orderProducts);
         this.orderService.update(order);
 
