@@ -66,6 +66,7 @@ public class MainController {
         List<Order> myOrders = orderRepository.findOrdersByUsername(principal.getName());
         DoubleSummaryStatistics doubleSummaryStatistics = myOrders.stream().collect(Collectors.summarizingDouble(Order::getTotalOrderPrice));
 
+
         model.addAttribute("statistics",doubleSummaryStatistics);
         model.addAttribute("role", role);
         return "profile-page";

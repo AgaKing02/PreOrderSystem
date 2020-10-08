@@ -105,6 +105,7 @@ function checkSaveProducts() {
         let choice = confirm("You have unordered products.\nDo you want to continue?")
         if (choice) {
             let save = readCookie("saveProducts");
+            save=atob(save);
             var items = [];
             items.push(save);
             save = JSON.parse(items[0]);
@@ -152,7 +153,6 @@ function noSelected() {
 function buy() {
     var json = generate(products);
     var json2 = generate(saveProducts);
-    createCookie("saveProducts", json2, 1);
     animation();
 
     $.ajax({
@@ -164,6 +164,9 @@ function buy() {
         cache: false,
         timeout: 600000,
         success: function (data) {
+            if(readCookie("saveProducts")!=null){
+                eraseCookie("saveProducts")
+            }
             var json = "<h4>Order</h4>" +
                 "<h1>Created</h1>" +
                 "<button class='btn btn-primary'>" +
@@ -172,8 +175,9 @@ function buy() {
             $('#message').html(json);
             styles("success");
         },
-        error: function (jqXHR, error, errorThrown) {
-            var json = "<h4>Order</h4><button class='btn btn-primary'>" + jqXHR.responseText + "</button>";
+        error: function (response, error, errorThrown) {
+            createCookie("saveProducts", btoa(json2), 1);
+            var json = "<h4>Order</h4><button class='btn btn-primary'>" +"<a href='/api/orders' style='color: white;'>"+response.responseText+"</a></button>";
             $('#message').html(json);
             styles("danger");
         }
@@ -218,7 +222,6 @@ function resetCart() {
 function action2() {
     $('#ajaxreader').addClass('d-none');
     $('body>*').css("opacity", "1")
-
 }
 
 // localhost:8081/catalog?chair=2

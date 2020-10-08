@@ -9,7 +9,7 @@
                             <h4 class="card-title">User Profile</h4>
                         </div>
                         <div class="card-body user-profile-card mb-3">
-                            <img class="user-profile-image img-thumbnail" alt="Unavailable" />
+                            <img th:if="${authuser=='Ella'}" src="https://avatars.mds.yandex.net/get-zen_doc/1577695/pub_5cf651ac7e0d5200ae50e8d0_5cf651ccaff15000afe51e6e/scale_2400" class="img-thumbnail" alt="Unavailable" />
                             <h4 th:text="${authuser}" class="text-center h6 mt-2"/>
                             <p th:text="${role}" class="text-center small"/>
                             <button class="btn btn-theme btn-sm">Follow</button>
