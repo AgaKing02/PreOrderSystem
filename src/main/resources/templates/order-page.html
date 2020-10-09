@@ -96,11 +96,13 @@
 <header th:insert="blocks/header :: header"/>
 <h1 th:if="${#lists.size(orders)>0}" class="text-center">My Orders</h1>
 <div class="container">
-    <div class="text-center" th:if="${#lists.size(orders)==0}"><h1 class="text-center bg-warning rounded p-2">No orders yet</h1></div>
+    <div class="text-center" th:if="${#lists.size(orders)==0}"><h1 class="text-center bg-warning rounded p-2">No orders
+        yet</h1></div>
     <div th:each="order:${orders}" class="border border-secondary m-3 p-3 shadow rounded ">
         <div class="row">
             <div th:each="food:${order.getOrderProducts()}" class="col-lg-2 text-center col-sm-3 col-xs-4">
-                <img style="height: 150px;width: 130px" th:src="${food.getProduct().getImage_url()}" th:alt="${food.getProduct().getCategory()}">
+                <img style="height: 150px;width: 130px" th:src="${food.getProduct().getImage_url()}"
+                     th:alt="${food.getProduct().getCategory()}">
                 <p th:text="${food.getProduct().getName()}"/>
                 <p th:text="${food.getQuantity()}+' dana'"/>
                 <br>
@@ -121,7 +123,7 @@
 
             <div th:if="${order.getStatus()!='PAID'}" class="col-4  mt-auto text-right">
                 <form class="m-1 " th:action="'/api/orders/remove/'+${order.getID()}" method="post" name="remove">
-                    <input  type="submit" value="Remove" class="btn btn-danger">
+                    <input type="submit" value="Remove" class="btn btn-danger">
                 </form>
                 <a style="font-size: 16px;" class="text-center btn btn-primary" th:href="'/checkout/'+${order.getID()}">Pay
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-credit-card" fill="currentColor"
@@ -136,18 +138,18 @@
 
             <div th:if="${order.getStatus()=='PAID'}" class="col-4  text-right mt-auto">
                 <abbr title="Wait the order" class="initialism">
-                <button class="btn btn-warning shadow-sm p-2">
-                    <div class="row px-2">
-                        <div class="loadingio-spinner-dual-ring-4ucapmn0rl9">
-                            <div class="ldio-qd9d3vhnsvf">
-                                <div></div>
-                                <div>
+                    <button class="btn btn-warning shadow-sm p-2">
+                        <div class="row px-2">
+                            <div class="loadingio-spinner-dual-ring-4ucapmn0rl9">
+                                <div class="ldio-qd9d3vhnsvf">
                                     <div></div>
+                                    <div>
+                                        <div></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </button>
+                    </button>
                 </abbr>
             </div>
 
