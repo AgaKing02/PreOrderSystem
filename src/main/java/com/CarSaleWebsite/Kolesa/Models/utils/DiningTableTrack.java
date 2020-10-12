@@ -1,4 +1,4 @@
-package com.CarSaleWebsite.Kolesa.Models;
+package com.CarSaleWebsite.Kolesa.Models.utils;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 

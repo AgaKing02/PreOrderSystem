@@ -1,8 +1,8 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
 import com.CarSaleWebsite.Kolesa.DTO.ChargeRequest;
-import com.CarSaleWebsite.Kolesa.Models.Order;
-import com.CarSaleWebsite.Kolesa.Models.OrderStatus;
+import com.CarSaleWebsite.Kolesa.Models.utils.Order;
+import com.CarSaleWebsite.Kolesa.Models.utils.enums.OrderStatus;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import com.CarSaleWebsite.Kolesa.Services.StripeService;
 import com.stripe.exception.StripeException;

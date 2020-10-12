@@ -1,7 +1,5 @@
 package com.CarSaleWebsite.Kolesa.DTO;
 
-import com.CarSaleWebsite.Kolesa.Models.Food;
-
 public class OrderProductDto {
 
 private FoodDto product;

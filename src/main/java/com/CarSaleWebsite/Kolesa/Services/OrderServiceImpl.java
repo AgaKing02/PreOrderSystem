@@ -1,13 +1,11 @@
 package com.CarSaleWebsite.Kolesa.Services;
 
-import com.CarSaleWebsite.Kolesa.Models.Order;
+import com.CarSaleWebsite.Kolesa.Models.utils.Order;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 

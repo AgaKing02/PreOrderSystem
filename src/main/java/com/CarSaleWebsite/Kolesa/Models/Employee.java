@@ -1,13 +1,13 @@
 package com.CarSaleWebsite.Kolesa.Models;
 
+import com.CarSaleWebsite.Kolesa.Models.utils.enums.Responsibilty;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Employee extends Usr {
 
     @Column(nullable = false)
@@ -41,5 +41,47 @@ public class Employee extends Usr {
 
     public Employee() {
 
+    }
+
+    public LocalDate getDateAddedToWork() {
+        return dateAddedToWork;
+    }
+
+    public void setDateAddedToWork(LocalDate dateAddedToWork) {
+        this.dateAddedToWork = dateAddedToWork;
+    }
+
+    public Responsibilty getResponsibilty() {
+        return responsibilty;
+    }
+
+    public void setResponsibilty(Responsibilty responsibilty) {
+        this.responsibilty = responsibilty;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public int getExperience_year() {
+        return experience_year;
+    }
+
+    public void setExperience_year(int experience_year) {
+        this.experience_year = experience_year;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "dateAddedToWork=" + dateAddedToWork +
+                ", responsibilty=" + responsibilty +
+                ", salary=" + salary +
+                ", experience_year=" + experience_year +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Functions;
 
-import com.CarSaleWebsite.Kolesa.Models.Food;
+import com.CarSaleWebsite.Kolesa.Models.utils.Food;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
 

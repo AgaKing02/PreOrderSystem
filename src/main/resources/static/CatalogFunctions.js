@@ -185,6 +185,7 @@ function buy() {
 
 }
 
+
 function styles(mode) {
     $('#ajaxreader').removeClass("d-none")
     if (mode == "success") {

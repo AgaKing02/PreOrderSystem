@@ -1,12 +1,14 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
 import com.CarSaleWebsite.Kolesa.DTO.AjaxResponseBody;
+import com.CarSaleWebsite.Kolesa.DTO.OrderDto;
 import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
+import com.CarSaleWebsite.Kolesa.DTO.OrderTypeDto;
 import com.CarSaleWebsite.Kolesa.Functions.ValidationExistence;
 import com.CarSaleWebsite.Kolesa.Functions.interfaces.ValidateExistence;
-import com.CarSaleWebsite.Kolesa.Models.Order;
-import com.CarSaleWebsite.Kolesa.Models.OrderFood;
-import com.CarSaleWebsite.Kolesa.Models.OrderStatus;
+import com.CarSaleWebsite.Kolesa.Models.utils.Order;
+import com.CarSaleWebsite.Kolesa.Models.utils.OrderFood;
+import com.CarSaleWebsite.Kolesa.Models.utils.enums.OrderStatus;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderFoodRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.UsersRepository;
@@ -18,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,6 +48,52 @@ public class TestContoller {
         this.orderRepository = orderRepository;
     }
 
+    @PostMapping("/paytype")
+    public ResponseEntity<?> chooseType(@RequestBody OrderTypeDto orderTypeDto, Errors errors, Principal principal) {
+        AjaxResponseBody result = new AjaxResponseBody();
+
+        if (errors.hasErrors()) {
+            result.setMessage(errors.getAllErrors()
+                    .stream().map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.joining(",")));
+            return ResponseEntity.badRequest().body(result);
+        }
+        if(orderTypeDto==null){
+            return ResponseEntity.badRequest().body("Order is null");
+
+        }
+        if (principal.getName().isEmpty()) {
+            return ResponseEntity.badRequest().body("User not found");
+        }
+        Order order = orderRepository.findByID(orderTypeDto.getOrderDto().getId());
+        if (order == null) {
+            return ResponseEntity.badRequest().body("No such an order");
+        }
+
+        if (orderTypeDto.getType().equals(OrderStatus.WITHCASH.name())) {
+            order.setStatus(OrderStatus.WITHCASH.name());
+            orderRepository.save(order);
+        }else if(orderTypeDto.getType().equals(OrderStatus.WITHWAITER.name())){
+            order.setStatus(OrderStatus.WITHWAITER.name());
+            orderRepository.save(order);
+        }else {
+            return ResponseEntity.badRequest().body("The error occured");
+        }
+
+        return ResponseEntity.ok("Accepted "+order.getID());
+    }
+
+    @GetMapping("/test")
+    public String test() throws JsonProcessingException {
+        OrderTypeDto orderTypeDto = new OrderTypeDto();
+        orderTypeDto.setOrderDto(new OrderDto((long) 1));
+        orderTypeDto.setType("WITHWAITER");
+
+
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(orderTypeDto);
+    }
+
 
     @PostMapping("/api/test")
     public ResponseEntity<?> create(@RequestBody PurchaseController.OrderForm form, Errors errors, Principal principal) throws JsonProcessingException {
@@ -59,24 +108,24 @@ public class TestContoller {
             return ResponseEntity.badRequest().body(result);
 
         }
-        if(orderRepository.findCountofOrderByUsername(principal.getName())>=2){
+        if (orderRepository.findCountofOrderByUsername(principal.getName()) >= 2) {
 
-            return  ResponseEntity.badRequest().body("Firstly pay the waiting orders");
+            return ResponseEntity.badRequest().body("Firstly pay the waiting orders");
         }
 
-            if(principal.getName().isEmpty()){
-           return ResponseEntity.badRequest().body("User not found");
+        if (principal.getName().isEmpty()) {
+            return ResponseEntity.badRequest().body("User not found");
         }
         List<OrderProductDto> formDtos = form.getProductOrders();
-        if(!formDtos.isEmpty()){
+        if (!formDtos.isEmpty()) {
             result.setMessage("success");
-        }else{
+        } else {
             result.setMessage("error");
             return ResponseEntity.badRequest().body(result);
         }
 
-        ValidateExistence validateExistence=new ValidationExistence();
-        validateExistence.validateExistence(formDtos,productService);
+        ValidateExistence validateExistence = new ValidationExistence();
+        validateExistence.validateExistence(formDtos, productService);
 
         Order order = new Order();
         order.setStatus(OrderStatus.WAITING.name());
@@ -95,15 +144,12 @@ public class TestContoller {
         this.orderService.update(order);
 
 
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonString = mapper.writeValueAsString(formDtos);
-        result.setResult(jsonString);
+//        ObjectMapper mapper = new ObjectMapper();
+//        String jsonString = mapper.writeValueAsString(formDtos);
+//        result.setResult(jsonString);
 
         return ResponseEntity.ok(result);
-
-
-           }
-
+    }
 
 
 }

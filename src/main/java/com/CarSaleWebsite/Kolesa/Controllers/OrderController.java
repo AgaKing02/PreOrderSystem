@@ -1,7 +1,7 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
-import com.CarSaleWebsite.Kolesa.Models.Order;
-import com.CarSaleWebsite.Kolesa.Models.OrderFood;
+import com.CarSaleWebsite.Kolesa.Models.utils.Order;
+import com.CarSaleWebsite.Kolesa.Models.utils.OrderFood;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderFoodRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderService;
@@ -42,7 +42,7 @@ public class OrderController {
     public String deleteOrder(Principal principal, @PathVariable(name = "order") Long id){
         Order deletable=orderRepository.findByIDAndUserUsername(id,principal.getName());
 
-        if(deletable.getStatus().equals("WAITING")){
+        if(deletable.getStatus().equals("WAITING") || deletable.getStatus().equals("WITHCASH")){
             List<OrderFood> orderFoods=orderFoodRepository.findAllByOrderID(id);
             orderFoodRepository.deleteAll(orderFoods);
             orderRepository.delete(deletable);

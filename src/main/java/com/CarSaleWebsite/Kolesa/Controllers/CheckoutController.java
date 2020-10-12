@@ -1,7 +1,7 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
 import com.CarSaleWebsite.Kolesa.DTO.ChargeRequest;
-import com.CarSaleWebsite.Kolesa.Models.Order;
+import com.CarSaleWebsite.Kolesa.Models.utils.Order;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

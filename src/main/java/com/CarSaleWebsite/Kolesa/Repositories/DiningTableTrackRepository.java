@@ -1,6 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Repositories;
 
-import com.CarSaleWebsite.Kolesa.Models.DiningTableTrack;
+import com.CarSaleWebsite.Kolesa.Models.utils.DiningTableTrack;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

@@ -1,20 +1,18 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
 import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
-import com.CarSaleWebsite.Kolesa.Models.Order;
-import com.CarSaleWebsite.Kolesa.Models.OrderFood;
-import com.CarSaleWebsite.Kolesa.Models.OrderStatus;
+import com.CarSaleWebsite.Kolesa.Models.utils.Order;
+import com.CarSaleWebsite.Kolesa.Models.utils.OrderFood;
+import com.CarSaleWebsite.Kolesa.Models.utils.enums.OrderStatus;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderFoodRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.UsersRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderProductService;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderService;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.ProductService;
 import com.CarSaleWebsite.Kolesa.Exceptions.ResourceNotFoundException;
-import com.sun.istack.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

@@ -1,8 +1,8 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
 import com.CarSaleWebsite.Kolesa.Functions.StringConfigurerFunctions;
-import com.CarSaleWebsite.Kolesa.Models.DiningTables;
-import com.CarSaleWebsite.Kolesa.Models.Food;
+import com.CarSaleWebsite.Kolesa.Models.utils.DiningTables;
+import com.CarSaleWebsite.Kolesa.Models.utils.Food;
 import com.CarSaleWebsite.Kolesa.Repositories.DiningTablesRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.FoodRepository;
 import org.springframework.stereotype.Controller;

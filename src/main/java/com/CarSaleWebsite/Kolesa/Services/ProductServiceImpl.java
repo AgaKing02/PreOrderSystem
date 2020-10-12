@@ -1,6 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Services;
 
-import com.CarSaleWebsite.Kolesa.Models.Food;
+import com.CarSaleWebsite.Kolesa.Models.utils.Food;
 import com.CarSaleWebsite.Kolesa.Repositories.FoodRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.ProductService;
 import com.CarSaleWebsite.Kolesa.Exceptions.ResourceNotFoundException;

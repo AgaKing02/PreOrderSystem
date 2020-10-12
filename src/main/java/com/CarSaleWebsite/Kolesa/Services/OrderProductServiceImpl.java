@@ -1,6 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Services;
 
-import com.CarSaleWebsite.Kolesa.Models.OrderFood;
+import com.CarSaleWebsite.Kolesa.Models.utils.OrderFood;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderFoodRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderProductService;
 import org.springframework.stereotype.Service;

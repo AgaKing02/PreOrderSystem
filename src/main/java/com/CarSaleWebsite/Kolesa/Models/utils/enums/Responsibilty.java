@@ -1,4 +1,4 @@
-package com.CarSaleWebsite.Kolesa.Models;
+package com.CarSaleWebsite.Kolesa.Models.utils.enums;
 
 public enum Responsibilty {
     COOK,
