@@ -42,13 +42,13 @@ public class OrderController {
     public String deleteOrder(Principal principal, @PathVariable(name = "order") Long id){
         Order deletable=orderRepository.findByIDAndUserUsername(id,principal.getName());
 
-        if(deletable.getStatus().equals("WAITING") || deletable.getStatus().equals("WITHCASH")){
+        if(deletable.getStatus().equals("WAITING") || deletable.getStatus().equals("WITHCASH") || deletable.getStatus().equals("WITHWAITER")){
             List<OrderFood> orderFoods=orderFoodRepository.findAllByOrderID(id);
             orderFoodRepository.deleteAll(orderFoods);
             orderRepository.delete(deletable);
-
         }
 
         return "redirect:/api/orders";
     }
+
 }

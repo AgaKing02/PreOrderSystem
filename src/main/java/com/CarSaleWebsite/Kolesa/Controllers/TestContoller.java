@@ -75,7 +75,7 @@ public class TestContoller {
             orderRepository.save(order);
         }else if(orderTypeDto.getType().equals(OrderStatus.WITHWAITER.name())){
             order.setStatus(OrderStatus.WITHWAITER.name());
-            orderRepository.save(order);
+            orderRepository.save(order);//3-6-9-12-15
         }else {
             return ResponseEntity.badRequest().body("The error occured");
         }
