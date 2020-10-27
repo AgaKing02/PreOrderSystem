@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 //@Controller
 public class ApplicationErrorController implements ErrorController {
     public ApplicationErrorController(){}
+    
 //    @GetMapping(value = "/error")
 //    public String handleError(HttpServletRequest request) {
 //
