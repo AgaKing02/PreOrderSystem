@@ -2,6 +2,7 @@ package com.CarSaleWebsite.Kolesa.Configuration;
 
 import com.CarSaleWebsite.Kolesa.Services.UsersDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,11 +20,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UsersDetailService usersDetailService;
 
+    @Value("${api.required.ip.address}")
+    private String required_ip;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/**").hasIpAddress(required_ip)
                 .antMatchers("/users","/users/add","/food/add","/food/edit","food/remove").hasRole("ADMIN")
                 .antMatchers("/profile","/order","/orderlist/**","/api/orders","api/test","/checkout/**","/paytype/**").authenticated()
                 .antMatchers("/indent/**").hasRole("COOK")

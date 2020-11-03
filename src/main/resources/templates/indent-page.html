@@ -72,7 +72,7 @@
             <div th:if="${order.getStatus()=='PAID' || order.getStatus()=='WITHCASH' || order.getStatus()=='WITHWAITER'}"
                  class="col-4  text-right mt-auto ml-auto">
 
-                <button th:id="${order.getID()}" onclick="gayMasturbated(this.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button th:id="${order.getID()}" onclick="orderDone(this.id)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                    Done
                 </button>
 
@@ -131,7 +131,7 @@
 <script>
     $('#myModal').modal(options)
 
-    function gayMasturbated(idd){
+    function orderDone(idd){
         $.ajax({
             type : "POST",
             url : "http://localhost:8081/indent/general",
