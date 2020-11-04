@@ -9,12 +9,15 @@ import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.IpAddressMatcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.Principal;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
@@ -46,7 +49,6 @@ public class MainController {
 
     @GetMapping("/login")
     public String LoginPage() {
-
         return "login-page";
     }
 

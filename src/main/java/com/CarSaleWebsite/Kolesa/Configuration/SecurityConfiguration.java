@@ -2,7 +2,6 @@ package com.CarSaleWebsite.Kolesa.Configuration;
 
 import com.CarSaleWebsite.Kolesa.Services.UsersDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,23 +13,26 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UsersDetailService usersDetailService;
 
-    @Value("${api.required.ip.address}")
-    private String required_ip;
+    private final String ipAdress="192.168.1.1/24";
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").hasIpAddress(required_ip)
-                .antMatchers("/users","/users/add","/food/add","/food/edit","food/remove").hasRole("ADMIN")
-                .antMatchers("/profile","/order","/orderlist/**","/api/orders","api/test","/checkout/**","/paytype/**").authenticated()
+                .antMatchers("/**").hasIpAddress(ipAdress)
+                .antMatchers("/users", "/users/add", "/food/add", "/food/edit", "food/remove").hasRole("ADMIN")
+                .antMatchers("/profile", "/order", "/orderlist/**", "/api/orders", "api/test", "/checkout/**", "/paytype/**").authenticated()
                 .antMatchers("/indent/**").hasRole("COOK")
                 .and()
                 .formLogin()
@@ -41,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID")
-                .invalidateHttpSession(true).and().rememberMe().rememberMeParameter("checkRememberMe").key("aga123").tokenValiditySeconds(60*60);
+                .invalidateHttpSession(true).and().rememberMe().rememberMeParameter("checkRememberMe").key("aga123").tokenValiditySeconds(60 * 60);
 
         ;
 
