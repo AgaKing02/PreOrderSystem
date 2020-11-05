@@ -2,14 +2,14 @@ package com.CarSaleWebsite.Kolesa.Models.Patterns;
 
 import com.CarSaleWebsite.Kolesa.Models.utils.Food;
 
-public class FoodBuilderBuilderWithDiscountDecorator implements FoodBuilderBuilder {
+public class FoodBuilderWithDiscountDecorator implements FoodBuilder {
     private static final double MIN_DISCOUNT = 0.0;
     private static final double MAX_DISCOUNT = 1.0;
 
-    private final FoodBuilderBuilder inner;
+    private final FoodBuilder inner;
     private final double discount;
 
-    public FoodBuilderBuilderWithDiscountDecorator(FoodBuilderBuilder inner, double discount) {
+    public FoodBuilderWithDiscountDecorator(FoodBuilder inner, double discount) {
         if (discount < MIN_DISCOUNT) {
             throw new IllegalArgumentException("Discount can't be less than " + MIN_DISCOUNT);
         }
@@ -24,28 +24,33 @@ public class FoodBuilderBuilderWithDiscountDecorator implements FoodBuilderBuild
 
 
     @Override
-    public FoodBuilderBuilder withPrice(double price) {
+    public FoodBuilder withPrice(double price) {
         return inner.withPrice(price - (price * discount));
     }
 
     @Override
-    public FoodBuilderBuilder withName(String name) {
+    public FoodBuilder withName(String name) {
         return inner.withName(name);
     }
 
     @Override
-    public FoodBuilderBuilder withCategory(String name) {
+    public FoodBuilder withCategory(String name) {
         return inner.withCategory(name);
     }
 
     @Override
-    public FoodBuilderBuilder withImageUrl(String imageUrl) {
+    public FoodBuilder withImageUrl(String imageUrl) {
         return inner.withImageUrl(imageUrl);
     }
 
     @Override
-    public FoodBuilderBuilder withDescription(String description) {
+    public FoodBuilder withDescription(String description) {
         return inner.withDescription(description);
+    }
+
+    @Override
+    public FoodBuilder withSize(String size) {
+        return inner.withSize(size);
     }
 
     @Override

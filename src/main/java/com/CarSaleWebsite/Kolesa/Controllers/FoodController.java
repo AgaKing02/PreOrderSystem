@@ -1,8 +1,8 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
 import com.CarSaleWebsite.Kolesa.Functions.StringConfigurerFunctions;
-import com.CarSaleWebsite.Kolesa.Models.Patterns.FoodBuilderBuilder;
-import com.CarSaleWebsite.Kolesa.Models.Patterns.FoodBuilderBuilderImpl;
+import com.CarSaleWebsite.Kolesa.Models.Patterns.FoodBuilder;
+import com.CarSaleWebsite.Kolesa.Models.Patterns.FoodBuilderImpl;
 import com.CarSaleWebsite.Kolesa.Models.utils.DiningTables;
 import com.CarSaleWebsite.Kolesa.Models.utils.Food;
 import com.CarSaleWebsite.Kolesa.Repositories.DiningTablesRepository;
@@ -52,7 +52,7 @@ public class FoodController {
                                 @RequestParam long price,
                                 @RequestParam String size,
                                 @RequestParam String image) {
-        FoodBuilderBuilder builder = new FoodBuilderBuilderImpl();
+        FoodBuilder builder = new FoodBuilderImpl();
 
         foodRepository.save( builder
                 .withCategory(category)
