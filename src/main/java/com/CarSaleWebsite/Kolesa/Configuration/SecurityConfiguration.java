@@ -31,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").hasIpAddress(ipAddress)
+//                .antMatchers("/**").hasIpAddress(ipAddress)
                 .antMatchers("/users", "/users/add", "/food/add", "/food/edit", "food/remove").hasRole("ADMIN")
                 .antMatchers("/profile", "/order", "/orderlist/**", "/api/orders", "api/test", "/checkout/**", "/paytype/**").authenticated()
                 .antMatchers("/indent/**").hasRole("COOK")

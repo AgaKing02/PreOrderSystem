@@ -2,8 +2,6 @@ package com.CarSaleWebsite.Kolesa.Models.Patterns;
 
 import com.CarSaleWebsite.Kolesa.Models.utils.Food;
 
-import java.util.List;
-
 public class ItemBuilderWithDiscountDecorator implements ItemBuilder {
     private static final double MIN_DISCOUNT = 0.0;
     private static final double MAX_DISCOUNT = 1.0;
