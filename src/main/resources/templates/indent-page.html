@@ -22,7 +22,7 @@
 <div class="row">
     <div class="text-center" th:if="${#lists.size(orders)==0}"><h1 class="text-center bg-warning rounded p-2">No orders
         yet</h1></div>
-    <div th:each="order:${orders}" class="col-6 border border-secondary p-3 shadow rounded ">
+    <div th:each="order:${orders}" th:id="${order.getID()}"  class="col-6 border border-secondary p-3 shadow rounded ">
         <div class="row">
             <div th:each="food:${order.getOrderProducts()}" class="col-lg-2 text-center col-sm-3 col-xs-4">
                 <img style="height: 150px;width: 130px" th:src="${food.getProduct().getImage_url()}"
@@ -77,25 +77,6 @@
                 </button>
 
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Success</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body text-center">
-                                Beka is Gay
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
 <!--                <abbr title="Wait the order" class="initialism">-->
@@ -110,24 +91,27 @@
         </div>
     </div>
 </div>
-<!--<div class="container" id="layer" style="-->
-<!--  position: fixed;-->
-<!--  top: 50%;-->
-<!--  left: 50%;-->
-<!--  transform: translate(-50%, -50%);">-->
-<!--    <div class="row">-->
-<!--        <div class="col-4 col-sm-3"></div>-->
-<!--        <div id="ajaxreader" class="col-4 col-sm-6 text-center d-none" role="alert" style="opacity: 1;">-->
-<!--            <p id="message"></p>-->
-<!--            <button onclick="action2()" type="button" class="close" data-dismiss="alert"-->
-<!--                    aria-label="Close">-->
-<!--                <span aria-hidden="true">&times;</span>-->
-<!--            </button>-->
-<!--        </div>-->
-<!--        <div class="col-4 col-sm-3"></div>-->
-
-<!--    </div>-->
-<!--</div>-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                Beka is Gay
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="blocks/footer :: footer"/>
+</body>
 <script>
     $('#myModal').modal(options)
 
@@ -139,13 +123,20 @@
                 "order_id" :idd
             },
             success: function(data){
-                alert("Success")
+             setDetail("Success","Order with id="+idd+" done")
+                removeView(idd)
             },
             error:function (response,status,error){
-               alert("error")
+                setDetail("Error","Order with id="+idd+"not done, error occured")
             }
 
         });
     }
+    function setDetail(status, message) {
+        $('#exampleModalLabel').text(status);
+        $('.modal-body ').text(message);
+    }
+    function removeView(idd){
+        $('div#'+idd).addClass("d-none");
+    }
 </script>
-<footer th:insert="blocks/footer :: footer"/>

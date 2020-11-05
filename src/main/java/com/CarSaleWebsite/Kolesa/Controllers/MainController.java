@@ -1,6 +1,7 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
 
+import com.CarSaleWebsite.Kolesa.Configuration.SecurityServiceImpl;
 import com.CarSaleWebsite.Kolesa.Models.utils.Food;
 import com.CarSaleWebsite.Kolesa.Models.utils.Order;
 import com.CarSaleWebsite.Kolesa.Models.Usr;
@@ -9,15 +10,12 @@ import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.IpAddressMatcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.security.Principal;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
@@ -26,18 +24,20 @@ import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
+
     @Autowired
     private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
     private final FoodRepository foodRepository;
     private final OrderRepository orderRepository;
-
+    private SecurityServiceImpl securityService;
 
     public MainController(UsersRepository usersRepository, PasswordEncoder passwordEncoder, FoodRepository foodRepository, OrderRepository orderRepository) {
         this.usersRepository = usersRepository;
         this.passwordEncoder = passwordEncoder;
         this.foodRepository = foodRepository;
         this.orderRepository = orderRepository;
+
     }
 
     @GetMapping("/")
@@ -86,14 +86,16 @@ public class MainController {
                                 @RequestParam String permission) {
         Usr user = new Usr(txtUsername, passwordEncoder.encode(txtPassword), role, permission);
         usersRepository.save(user);
+        securityService.autoLogin(user.getUsername(),user.getPassword());
 
-        return "redirect:/users";
+        return "redirect:/catalog";
     }
 
     @GetMapping("/about")
     public String aboutPage() {
         return "about-page";
     }
+
 
 
 }

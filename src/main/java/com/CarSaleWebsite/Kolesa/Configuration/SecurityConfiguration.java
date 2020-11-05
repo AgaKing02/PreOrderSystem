@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
 //                .antMatchers("/**").hasIpAddress(ipAddress)
-                .antMatchers("/users", "/users/add", "/food/add", "/food/edit", "food/remove").hasRole("ADMIN")
+                .antMatchers("/users", "/food/add", "/food/edit", "food/remove").hasRole("ADMIN")
                 .antMatchers("/profile", "/order", "/orderlist/**", "/api/orders", "api/test", "/checkout/**", "/paytype/**").authenticated()
                 .antMatchers("/indent/**").hasRole("COOK")
                 .and()
@@ -45,7 +45,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true).and().rememberMe().rememberMeParameter("checkRememberMe").key("aga123").tokenValiditySeconds(60 * 60);
-
         ;
 
     }
