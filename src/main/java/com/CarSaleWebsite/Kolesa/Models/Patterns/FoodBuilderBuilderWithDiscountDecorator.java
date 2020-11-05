@@ -2,14 +2,14 @@ package com.CarSaleWebsite.Kolesa.Models.Patterns;
 
 import com.CarSaleWebsite.Kolesa.Models.utils.Food;
 
-public class ItemBuilderWithDiscountDecorator implements ItemBuilder {
+public class FoodBuilderBuilderWithDiscountDecorator implements FoodBuilderBuilder {
     private static final double MIN_DISCOUNT = 0.0;
     private static final double MAX_DISCOUNT = 1.0;
 
-    private final ItemBuilder inner;
+    private final FoodBuilderBuilder inner;
     private final double discount;
 
-    public ItemBuilderWithDiscountDecorator(ItemBuilder inner, double discount) {
+    public FoodBuilderBuilderWithDiscountDecorator(FoodBuilderBuilder inner, double discount) {
         if (discount < MIN_DISCOUNT) {
             throw new IllegalArgumentException("Discount can't be less than " + MIN_DISCOUNT);
         }
@@ -24,27 +24,27 @@ public class ItemBuilderWithDiscountDecorator implements ItemBuilder {
 
 
     @Override
-    public ItemBuilder withPrice(double price) {
+    public FoodBuilderBuilder withPrice(double price) {
         return inner.withPrice(price - (price * discount));
     }
 
     @Override
-    public ItemBuilder withName(String name) {
+    public FoodBuilderBuilder withName(String name) {
         return inner.withName(name);
     }
 
     @Override
-    public ItemBuilder withCategory(String name) {
+    public FoodBuilderBuilder withCategory(String name) {
         return inner.withCategory(name);
     }
 
     @Override
-    public ItemBuilder withImageUrl(String imageUrl) {
+    public FoodBuilderBuilder withImageUrl(String imageUrl) {
         return inner.withImageUrl(imageUrl);
     }
 
     @Override
-    public ItemBuilder withDescription(String description) {
+    public FoodBuilderBuilder withDescription(String description) {
         return inner.withDescription(description);
     }
 
