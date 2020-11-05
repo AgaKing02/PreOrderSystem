@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="icon" href="https://www.flaticon.com/premium-icon/icons/svg/562/562678.svg">
-
 </head>
 <body>
 <header th:insert="blocks/header :: header"/>
@@ -20,13 +19,17 @@
         yet</h1></div>
     <div th:each="order:${orders}" class="border border-secondary m-3 p-3 shadow rounded ">
         <div class="row">
-            <div th:each="food:${order.getOrderProducts()}" class="col-lg-2 text-center col-sm-3 col-xs-4">
-                <img style="height: 150px;width: 130px" th:src="${food.getProduct().getImage_url()}"
-                     th:alt="${food.getProduct().getCategory()}">
-                <p th:text="${food.getProduct().getName()}"/>
-                <p th:text="${food.getQuantity()}+' dana'"/>
-                <br>
-                <b>Price :<p th:text="${food.getProduct().getPrice()}"/></b>
+            <div th:each="food:${order.getOrderProducts()}" class="col-lg-3 text-center col-sm-3 col-xs-4">
+                <div>
+                    <img style="height: 150px;width: 130px" th:src="${food.getProduct().getImage_url()}"
+                         th:alt="${food.getProduct().getCategory()}">
+                </div>
+                <div>
+                    <h2 th:text="${food.getProduct().getName()}"/>
+                    <p th:text="${food.getQuantity()}+' dana'"/>
+                    <b>Price :<p th:text="${food.getProduct().getPrice()}"/></b>
+                </div>
+
             </div>
 
             <div class="col-2 shadow ml-auto mt-auto mb-3 text-center mr-3"><h3>Total:</h3>
@@ -46,7 +49,8 @@
                     <input type="submit" value="Remove" class="btn btn-danger">
                 </form>
 
-                <button th:if="${order.getStatus()!='WITHCASH'}" th:id="${order.getID()}" class="btn btn-success" onclick="cash(this.id)">
+                <button th:if="${order.getStatus()!='WITHCASH'}" th:id="${order.getID()}" class="btn btn-success"
+                        onclick="cash(this.id)">
                     Cash
                     <abbr title="At Cashbox">
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cash-stack" fill="currentColor"
@@ -67,12 +71,14 @@
                         <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
                     </svg>
                 </a>
-                <button th:if="${order.getStatus()!='WITHWAITER'}" onclick="waiter(this.id)" th:id="${order.getID()}" class="btn btn-light py-2">With
+                <button th:if="${order.getStatus()!='WITHWAITER'}" onclick="waiter(this.id)" th:id="${order.getID()}"
+                        class="btn btn-light py-2">With
                     Waiter
                 </button>
             </div>
 
-            <div th:if="${order.getStatus()=='PAID' || order.getStatus()=='WITHCASH' || order.getStatus()=='WITHWAITER'}" class="col-4  text-right mt-auto ml-auto">
+            <div th:if="${order.getStatus()=='PAID' || order.getStatus()=='WITHCASH' || order.getStatus()=='WITHWAITER'}"
+                 class="col-4  text-right mt-auto ml-auto">
                 <abbr title="Wait the order" class="initialism">
                     <button class="btn btn-warning " type="button" disabled>
                         <span class="spinner-border spinner-border-md text-dark" role="status"
@@ -130,12 +136,12 @@
             cache: false,
             timeout: 600000,
             success: function (data) {
-                var json = "<h4>Payment</h4><button class='btn btn-primary'>" +"<a href='/api/orders' style='color: white;'>"+response.responseText+"</a></button>";
+                var json = "<h4>Payment</h4><button class='btn btn-primary'>" + "<a href='/api/orders' style='color: white;'>" + response.responseText + "</a></button>";
                 $('#message').html(json);
                 styles("success");
             },
             error: function (response, error, errorThrown) {
-                var json = "<h4>Payment</h4><button class='btn btn-primary'>" +"<a href='/api/orders' style='color: white;'>"+response.responseText+"</a></button>";
+                var json = "<h4>Payment</h4><button class='btn btn-primary'>" + "<a href='/api/orders' style='color: white;'>" + response.responseText + "</a></button>";
                 $('#message').html(json);
                 styles("danger");
             }

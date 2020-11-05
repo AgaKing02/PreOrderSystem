@@ -75,14 +75,10 @@ function addToCart(idd) {
         let item = $('#items').text();
         if (item === 'No items selected') {
             $('#items').text("");
+            $('#items').css('text-align','left');
         }
-
-        $('#items').append('<span id="cart-item ' + idd + '" ><b>' + idd + '</b> x ' + count + ' dana : <b>' + count * price + '</b> tg' + '<br></span>');
-        $('#overall').val(parseInt($('#overall').val()) + count * price);
-        $('#overall').removeClass("d-none");
-        $('#over').removeClass("d-none");
-        $('#tg').removeClass("d-none");
-        $('.options').removeClass("d-none");
+        addProductInfo(idd,count,price);
+        showContent();
 
     } else {
         alert("Firstly,choose the quantity")
@@ -131,7 +127,7 @@ function checkSaveProducts() {
 }
 
 function addProductInfo(idd, count, price) {
-    $('#items').append('<span id="cart-item ' + idd + '" ><b>' + idd + '</b> x ' + count + ' dana : <b>' + count * price + '</b> tg' + '<br></span>');
+    $('#items').append('<span class="cart" id="cart-item ' + idd + ' " ><b>' + idd + '</b> x ' + count + ' dana : <b>' + count * price + '</b> tg' + '<br></span>');
     $('#overall').val(parseInt($('#overall').val()) + count * price);
 }
 
