@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tracks</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"-->
+    <!--          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"
+            integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd"
+            crossorigin="anonymous"></script>
+    <link rel="icon" href="https://www.flaticon.com/premium-icon/icons/svg/562/562678.svg">
+
+</head>
+<body>
+<header th:insert="blocks/header :: header"/>
+<h1 class="text-center border border-info ">Welcome
+    <span class="text-center" sec:authentication="name"/> ,waiter
+</h1>
+
+<h1 th:if="${#lists.size(tables)>0}" class="text-center">Daily Done Orders</h1>
+<h1 th:if="${#lists.size(tables)==0}" class="text-center bg-warning rounded p-2">No orders done yet</h1>
+<div class="row">
+    <div th:each="table:${tables}" class="col-6 border border-secondary p-3 shadow rounded ">
+        <h1 th:text="'For order '+${table.orderid.getID()}"/>
+        <h1 class="btn btn-warning" th:text="'Table id is '+${table.getDiningTablesid().getTable_id()}"/>
+        <h2 th:text="'The location in restaurant is '+${table.getDiningTablesid().getSection()}"/>
+        <h3 th:text="'With '+${table.getDiningTablesid().getChair_count()}+' chair'"/>
+    </div>
+</div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="blocks/footer :: footer"/>
+</body>
+<!--<script>-->
+<!--    $('#myModal').modal(options)-->
+
+<!--    function orderDone(idd) {-->
+<!--        $.ajax({-->
+<!--            type: "POST",-->
+<!--            url: "http://localhost:8081/indent/general",-->
+<!--            data: {-->
+<!--                "order_id": idd-->
+<!--            },-->
+<!--            success: function (data) {-->
+<!--                setDetail("Success", "Order with id=" + idd + " done")-->
+<!--                removeView(idd)-->
+<!--            },-->
+<!--            error: function (response, status, error) {-->
+<!--                setDetail("Error", "Order with id=" + idd + "not done, error occured")-->
+<!--            }-->
+
+<!--        });-->
+<!--    }-->
+
+<!--    function setDetail(status, message) {-->
+<!--        $('#exampleModalLabel').text(status);-->
+<!--        $('.modal-body ').text(message);-->
+<!--    }-->
+
+<!--    function removeView(idd) {-->
+<!--        $('div#' + idd).addClass("d-none");-->
+<!--    }-->
+<!--</script>-->

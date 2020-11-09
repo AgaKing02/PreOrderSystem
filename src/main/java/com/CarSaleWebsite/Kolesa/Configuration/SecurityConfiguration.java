@@ -35,6 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users", "/food/add", "/food/edit", "food/remove").hasRole("ADMIN")
                 .antMatchers("/profile", "/order", "/orderlist/**", "/api/orders", "api/test", "/checkout/**", "/paytype/**").authenticated()
                 .antMatchers("/indent/**").hasRole("COOK")
+                .antMatchers("/table/**").hasRole("WAITER")
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/login")
