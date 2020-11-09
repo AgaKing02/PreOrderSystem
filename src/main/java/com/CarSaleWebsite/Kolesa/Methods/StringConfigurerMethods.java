@@ -1,10 +1,10 @@
-package com.CarSaleWebsite.Kolesa.Functions;
+package com.CarSaleWebsite.Kolesa.Methods;
 
 
 import java.util.Arrays;
 import java.util.List;
 
-public class StringConfigurerFunctions {
+public class StringConfigurerMethods {
 
     public static String replaceWhiteSpaceWithMinus(String word){
         return word.replaceAll("\\s+", "-");

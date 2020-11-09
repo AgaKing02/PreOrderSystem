@@ -105,7 +105,7 @@ function checkSaveProducts() {
         let choice = confirm("You have unordered products.\nDo you want to continue?")
         if (choice) {
             let save = readCookie("saveProducts");
-            save=atob(save);
+            save = atob(save);
             var items = [];
             items.push(save);
             save = JSON.parse(items[0]);
@@ -124,7 +124,7 @@ function checkSaveProducts() {
 
             }
             showContent()
-        }else {
+        } else {
             eraseCookie("saveProducts")
         }
     }
@@ -158,13 +158,13 @@ function buy() {
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/api/test",
+        url: "/api/test/" + parseInt(beka()),
         data: json,
         dataType: 'json',
         cache: false,
         timeout: 600000,
         success: function (data) {
-            if(readCookie("saveProducts")!=null){
+            if (readCookie("saveProducts") != null) {
                 eraseCookie("saveProducts")
             }
             var json = "<h4>Order</h4>" +
@@ -177,7 +177,7 @@ function buy() {
         },
         error: function (response, error, errorThrown) {
             createCookie("saveProducts", btoa(json2), 1);
-            var json = "<h4>Order</h4><button class='btn btn-primary'>" +"<a href='/api/orders' style='color: white;'>"+response.responseText+"</a></button>";
+            var json = "<h4>Order</h4><button class='btn btn-primary'>" + "<a href='/api/orders' style='color: white;'>" + response.responseText + "</a></button>";
             $('#message').html(json);
             styles("danger");
         }
@@ -228,9 +228,21 @@ function action2() {
 // localhost:8081/catalog?chair=2
 
 function beka() {
-    if (window.location.href.substr(-7, 5) === "chair") {
-        createCookie("bekzat", window.location.href, 1);
+    if (getParameterByName('chair') != null) {
+        return getParameterByName('chair');
+    } else {
+        return 0;
     }
+
+}
+
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
 // beka();

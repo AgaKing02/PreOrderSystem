@@ -1,8 +1,8 @@
-package com.CarSaleWebsite.Kolesa.Functions;
+package com.CarSaleWebsite.Kolesa.Methods;
 
 import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
 import com.CarSaleWebsite.Kolesa.Exceptions.ResourceNotFoundException;
-import com.CarSaleWebsite.Kolesa.Functions.interfaces.ValidateExistence;
+import com.CarSaleWebsite.Kolesa.Methods.interfaces.ValidateExistence;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.ProductService;
 import org.springframework.util.CollectionUtils;
 

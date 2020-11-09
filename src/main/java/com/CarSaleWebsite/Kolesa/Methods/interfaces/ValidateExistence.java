@@ -1,4 +1,4 @@
-package com.CarSaleWebsite.Kolesa.Functions.interfaces;
+package com.CarSaleWebsite.Kolesa.Methods.interfaces;
 
 import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.ProductService;

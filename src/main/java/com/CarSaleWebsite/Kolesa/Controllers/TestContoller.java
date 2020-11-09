@@ -4,8 +4,8 @@ import com.CarSaleWebsite.Kolesa.DTO.AjaxResponseBody;
 import com.CarSaleWebsite.Kolesa.DTO.OrderDto;
 import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
 import com.CarSaleWebsite.Kolesa.DTO.OrderTypeDto;
-import com.CarSaleWebsite.Kolesa.Functions.ValidationExistence;
-import com.CarSaleWebsite.Kolesa.Functions.interfaces.ValidateExistence;
+import com.CarSaleWebsite.Kolesa.Methods.ValidationExistence;
+import com.CarSaleWebsite.Kolesa.Methods.interfaces.ValidateExistence;
 import com.CarSaleWebsite.Kolesa.Models.utils.DiningTableTrack;
 import com.CarSaleWebsite.Kolesa.Models.utils.DiningTables;
 import com.CarSaleWebsite.Kolesa.Models.utils.Order;
@@ -96,8 +96,8 @@ public class TestContoller {
     }
 
 
-    @PostMapping("/api/test")
-    public ResponseEntity<?> create(@RequestBody PurchaseController.OrderForm form, Errors errors, Principal principal, @RequestParam(name = "chair",defaultValue = "1",required = false) int chair) throws JsonProcessingException {
+    @PostMapping("/api/test/{table}")
+    public ResponseEntity<?> create(@RequestBody PurchaseController.OrderForm form, Errors errors, Principal principal, @PathVariable(name = "table") int chair) throws JsonProcessingException {
         System.out.println("Table is"+chair);
         AjaxResponseBody result = new AjaxResponseBody();
 

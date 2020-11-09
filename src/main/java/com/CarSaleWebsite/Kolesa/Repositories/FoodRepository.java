@@ -16,6 +16,7 @@ public interface FoodRepository extends CrudRepository<Food,Long> {
      Boolean existsByID(long id);
      Food findByID(Long id);
      List<Food> findByName(String name);
+
      @Query("select distinct category from Food order by category")
      List<String> findAllCategories();
 

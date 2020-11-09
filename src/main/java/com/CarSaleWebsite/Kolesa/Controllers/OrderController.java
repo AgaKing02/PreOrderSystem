@@ -1,5 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
+import com.CarSaleWebsite.Kolesa.Models.utils.DiningTableTrack;
 import com.CarSaleWebsite.Kolesa.Models.utils.Order;
 import com.CarSaleWebsite.Kolesa.Models.utils.OrderFood;
 import com.CarSaleWebsite.Kolesa.Repositories.DiningTableTrackRepository;
@@ -22,6 +23,7 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final OrderFoodRepository orderFoodRepository;
     private final DiningTableTrackRepository diningTableTrackRepository;
+
     public OrderController(OrderService orderService, OrderRepository orderRepository, OrderFoodRepository orderFoodRepository, DiningTableTrackRepository diningTableTrackRepository) {
         this.orderService = orderService;
         this.orderRepository = orderRepository;
@@ -40,14 +42,21 @@ public class OrderController {
         return "order-page";
 
     }
-    @PostMapping("/api/orders/remove/{order}")
-    public String deleteOrder(Principal principal, @PathVariable(name = "order") Long id){
-        Order deletable=orderRepository.findByIDAndUserUsername(id,principal.getName());
 
-        if(deletable.getStatus().equals("WAITING") || deletable.getStatus().equals("WITHCASH") || deletable.getStatus().equals("WITHWAITER")){
-            List<OrderFood> orderFoods=orderFoodRepository.findAllByOrderID(id);
+    @PostMapping("/api/orders/remove/{order}")
+    public String deleteOrder(Principal principal, @PathVariable(name = "order") Long id) {
+        Order deletable = orderRepository.findByIDAndUserUsername(id, principal.getName());
+
+        if (deletable.getStatus().equals("WAITING") || deletable.getStatus().equals("WITHCASH") || deletable.getStatus().equals("WITHWAITER")) {
+            List<OrderFood> orderFoods = orderFoodRepository.findAllByOrderID(id);
+
+            DiningTableTrack diningTableTrack=diningTableTrackRepository.findByOrderid(deletable);
+            if(diningTableTrack!=null){
+              diningTableTrackRepository.deleteByOrderid(deletable);
+            }
             orderFoodRepository.deleteAll(orderFoods);
             orderRepository.delete(deletable);
+
 
 
         }

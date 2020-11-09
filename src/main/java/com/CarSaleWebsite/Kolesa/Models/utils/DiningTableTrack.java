@@ -13,16 +13,16 @@ public class DiningTableTrack {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "table_id", nullable = false)
-    public DiningTables diningTables_id;
+    public DiningTables diningTablesid;
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    public Order order_id;
+    public Order orderid;
 
     public DiningTableTrack(DiningTables diningTables_id, Order order_id) {
-        this.diningTables_id = diningTables_id;
-        this.order_id = order_id;
+        this.diningTablesid = diningTables_id;
+        this.orderid = order_id;
     }
 
     public DiningTableTrack() {
@@ -34,19 +34,19 @@ public class DiningTableTrack {
     }
 
 
-    public DiningTables getDiningTables_id() {
-        return diningTables_id;
+    public DiningTables getDiningTablesid() {
+        return diningTablesid;
     }
 
-    public void setDiningTables_id(DiningTables diningTables_id) {
-        this.diningTables_id = diningTables_id;
+    public void setDiningTablesid(DiningTables diningTablesid) {
+        this.diningTablesid = diningTablesid;
     }
 
-    public Order getOrder_id() {
-        return order_id;
+    public Order getOrderid() {
+        return orderid;
     }
 
-    public void setOrder_id(Order order_id) {
-        this.order_id = order_id;
+    public void setOrderid(Order orderid) {
+        this.orderid = orderid;
     }
 }

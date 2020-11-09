@@ -1,6 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
-import com.CarSaleWebsite.Kolesa.Functions.StringConfigurerFunctions;
+import com.CarSaleWebsite.Kolesa.Methods.StringConfigurerMethods;
 import com.CarSaleWebsite.Kolesa.Models.Patterns.FoodBuilder;
 import com.CarSaleWebsite.Kolesa.Models.Patterns.FoodBuilderImpl;
 import com.CarSaleWebsite.Kolesa.Models.utils.DiningTables;
@@ -56,7 +56,7 @@ public class FoodController {
 
         foodRepository.save( builder
                 .withCategory(category)
-                .withName(StringConfigurerFunctions.replaceWhiteSpaceWithMinus(nme))
+                .withName(StringConfigurerMethods.replaceWhiteSpaceWithMinus(nme))
                 .withDescription(description)
                 .withPrice(price)
                 .withSize(size)
@@ -108,7 +108,7 @@ public class FoodController {
     public String catalogPagewithChair(@RequestParam(name = "chair", required = false, defaultValue = "0") Long chair_id, Model model) {
         Iterable<Food> foodList = foodRepository.findAll();
         List<String> categories = foodRepository.findAllCategories();
-        List<String> colors = StringConfigurerFunctions.allColorsinBootstrap();
+        List<String> colors = StringConfigurerMethods.allColorsinBootstrap();
 
         model.addAttribute("foodList", foodList);
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
-//@Controller
+@Controller
 public class ApplicationErrorController implements ErrorController {
     public ApplicationErrorController(){}
     
