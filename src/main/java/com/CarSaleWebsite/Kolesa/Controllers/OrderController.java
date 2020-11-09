@@ -22,7 +22,6 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final OrderFoodRepository orderFoodRepository;
     private final DiningTableTrackRepository diningTableTrackRepository;
-
     public OrderController(OrderService orderService, OrderRepository orderRepository, OrderFoodRepository orderFoodRepository, DiningTableTrackRepository diningTableTrackRepository) {
         this.orderService = orderService;
         this.orderRepository = orderRepository;
@@ -41,16 +40,15 @@ public class OrderController {
         return "order-page";
 
     }
-
     @PostMapping("/api/orders/remove/{order}")
-    public String deleteOrder(Principal principal, @PathVariable(name = "order") Long id) {
-        Order deletable = orderRepository.findByIDAndUserUsername(id, principal.getName());
+    public String deleteOrder(Principal principal, @PathVariable(name = "order") Long id){
+        Order deletable=orderRepository.findByIDAndUserUsername(id,principal.getName());
 
-        if (deletable.getStatus().equals("WAITING") || deletable.getStatus().equals("WITHCASH") || deletable.getStatus().equals("WITHWAITER")) {
-            List<OrderFood> orderFoods = orderFoodRepository.findAllByOrderID(id);
+        if(deletable.getStatus().equals("WAITING") || deletable.getStatus().equals("WITHCASH") || deletable.getStatus().equals("WITHWAITER")){
+            List<OrderFood> orderFoods=orderFoodRepository.findAllByOrderID(id);
             orderFoodRepository.deleteAll(orderFoods);
             orderRepository.delete(deletable);
-            diningTableTrackRepository.deleteByOrder(deletable);
+
 
         }
 
