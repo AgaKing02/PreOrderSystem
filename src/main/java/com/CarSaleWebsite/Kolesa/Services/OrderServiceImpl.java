@@ -30,9 +30,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order create(Order order) {
         order.setDateCreated(LocalDate.now());
-
-        sender.send(order.getUser().getUsername(), "ORDER", "You have ordered products for " + order.getTotalOrderPrice());
-
+//        sender.send(order.getUser().getUsername(), "ORDER", "You have ordered products for " + order.getTotalOrderPrice());
         return this.orderRepository.save(order);
     }
 

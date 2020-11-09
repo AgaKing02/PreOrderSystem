@@ -86,7 +86,7 @@ public class MainController {
                                 @RequestParam String permission) {
         Usr user = new Usr(txtUsername, passwordEncoder.encode(txtPassword), role, permission);
         usersRepository.save(user);
-        securityService.autoLogin(user.getUsername(),user.getPassword());
+//        securityService.autoLogin(user.getUsername(),user.getPassword());
 
         return "redirect:/catalog";
     }
