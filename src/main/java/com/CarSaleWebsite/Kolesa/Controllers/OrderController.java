@@ -52,7 +52,7 @@ public class OrderController {
 
             DiningTableTrack diningTableTrack=diningTableTrackRepository.findByOrderid(deletable);
             if(diningTableTrack!=null){
-              diningTableTrackRepository.deleteByOrderid(deletable);
+              diningTableTrackRepository.delete(diningTableTrack);
             }
             orderFoodRepository.deleteAll(orderFoods);
             orderRepository.delete(deletable);
