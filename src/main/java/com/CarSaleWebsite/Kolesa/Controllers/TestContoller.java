@@ -6,12 +6,12 @@ import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
 import com.CarSaleWebsite.Kolesa.DTO.OrderTypeDto;
 import com.CarSaleWebsite.Kolesa.Functions.ValidationExistence;
 import com.CarSaleWebsite.Kolesa.Functions.interfaces.ValidateExistence;
+import com.CarSaleWebsite.Kolesa.Models.utils.DiningTableTrack;
+import com.CarSaleWebsite.Kolesa.Models.utils.DiningTables;
 import com.CarSaleWebsite.Kolesa.Models.utils.Order;
 import com.CarSaleWebsite.Kolesa.Models.utils.OrderFood;
 import com.CarSaleWebsite.Kolesa.Models.utils.enums.OrderStatus;
-import com.CarSaleWebsite.Kolesa.Repositories.OrderFoodRepository;
-import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
-import com.CarSaleWebsite.Kolesa.Repositories.UsersRepository;
+import com.CarSaleWebsite.Kolesa.Repositories.*;
 import com.CarSaleWebsite.Kolesa.Services.OrderProductServiceImpl;
 import com.CarSaleWebsite.Kolesa.Services.OrderServiceImpl;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.ProductService;
@@ -20,13 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,14 +35,18 @@ public class TestContoller {
     private final OrderServiceImpl orderService;
     private final OrderFoodRepository orderFoodRepository;
     private final OrderRepository orderRepository;
+    private final DiningTablesRepository diningTablesRepository;
+    private final DiningTableTrackRepository diningTableTrackRepository;
 
-    public TestContoller(OrderProductServiceImpl orderProductService, ProductService productService, UsersRepository usersRepository, OrderServiceImpl orderService, OrderFoodRepository orderFoodRepository, OrderRepository orderRepository) {
+    public TestContoller(OrderProductServiceImpl orderProductService, ProductService productService, UsersRepository usersRepository, OrderServiceImpl orderService, OrderFoodRepository orderFoodRepository, OrderRepository orderRepository, DiningTablesRepository diningTablesRepository, DiningTableTrackRepository diningTableTrackRepository) {
         this.orderProductService = orderProductService;
         this.productService = productService;
         this.usersRepository = usersRepository;
         this.orderService = orderService;
         this.orderFoodRepository = orderFoodRepository;
         this.orderRepository = orderRepository;
+        this.diningTablesRepository = diningTablesRepository;
+        this.diningTableTrackRepository = diningTableTrackRepository;
     }
 
     @PostMapping("/paytype")
@@ -97,7 +97,8 @@ public class TestContoller {
 
 
     @PostMapping("/api/test")
-    public ResponseEntity<?> create(@RequestBody PurchaseController.OrderForm form, Errors errors, Principal principal) throws JsonProcessingException {
+    public ResponseEntity<?> create(@RequestBody PurchaseController.OrderForm form, Errors errors, Principal principal, @RequestParam(name = "chair",defaultValue = "1",required = false) int chair) throws JsonProcessingException {
+        System.out.println("Table is"+chair);
         AjaxResponseBody result = new AjaxResponseBody();
 
         if (errors.hasErrors()) {
@@ -143,6 +144,10 @@ public class TestContoller {
         }
         order.setOrderProducts(orderProducts);
         this.orderService.update(order);
+        if(chair>0){
+            DiningTables diningTables=diningTablesRepository.findByID((long) chair);
+            diningTableTrackRepository.save(new DiningTableTrack(diningTables,order));
+        }
 //        ObjectMapper mapper = new ObjectMapper();
 //        String jsonString = mapper.writeValueAsString(formDtos);
 //        result.setResult(jsonString);
