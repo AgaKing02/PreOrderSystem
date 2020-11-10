@@ -10,6 +10,7 @@ import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderProductService;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderService;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.ProductService;
 import com.CarSaleWebsite.Kolesa.Exceptions.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +26,15 @@ import java.util.stream.Collectors;
 
 @RestController
 public class PurchaseController {
-
+    @Autowired
     private final ProductService productService;
+    @Autowired
     private final OrderService orderService;
+    @Autowired
     private final OrderProductService orderProductService;
+    @Autowired
     private final UsersRepository usersRepository;
+    @Autowired
     private final OrderFoodRepository orderFoodRepository;
 
     public PurchaseController(ProductService productService, OrderService orderService, OrderProductService orderProductService, UsersRepository usersRepository, OrderFoodRepository orderFoodRepository) {

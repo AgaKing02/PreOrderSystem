@@ -27,9 +27,13 @@ public class MainController {
 
     @Autowired
     private final UsersRepository usersRepository;
+    @Autowired
     private final PasswordEncoder passwordEncoder;
+    @Autowired
     private final FoodRepository foodRepository;
+    @Autowired
     private final OrderRepository orderRepository;
+
     private SecurityServiceImpl securityService;
 
     public MainController(UsersRepository usersRepository, PasswordEncoder passwordEncoder, FoodRepository foodRepository, OrderRepository orderRepository) {

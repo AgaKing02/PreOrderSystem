@@ -5,6 +5,7 @@ import com.CarSaleWebsite.Kolesa.Models.utils.enums.OrderStatus;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderFoodRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +21,11 @@ import java.util.List;
 @Controller
 @RequestMapping("/indent")
 public class IndentController {
+    @Autowired
     private final OrderService orderService;
+    @Autowired
     private final OrderRepository orderRepository;
+    @Autowired
     private final OrderFoodRepository orderFoodRepository;
 
     public IndentController(OrderService orderService, OrderRepository orderRepository, OrderFoodRepository orderFoodRepository) {

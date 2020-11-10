@@ -7,6 +7,7 @@ import com.CarSaleWebsite.Kolesa.Models.utils.DiningTables;
 import com.CarSaleWebsite.Kolesa.Models.utils.Food;
 import com.CarSaleWebsite.Kolesa.Repositories.DiningTablesRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.FoodRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,9 @@ import java.util.List;
 
 @Controller
 public class FoodController {
+    @Autowired
     private final FoodRepository foodRepository;
+    @Autowired
     private final DiningTablesRepository diningTablesRepository;
 
     public FoodController(FoodRepository foodRepository, DiningTablesRepository diningTablesRepository) {
