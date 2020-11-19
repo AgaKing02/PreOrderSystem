@@ -3,8 +3,7 @@ package com.CarSaleWebsite.Kolesa.Models.utils;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-
-@Embeddable
+@Entity
 public class OrderFood {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
