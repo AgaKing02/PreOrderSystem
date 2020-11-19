@@ -18,7 +18,9 @@ function minus(idd) {
 
     }
 }
-
+function appearOfCart() {
+    $('#korzina').removeClass("d-none");
+}
 
 //{"productOrders":[{"product":{"name":"Whopper"},"quantity":3},{"product":{"name":"Coca-Cola"},"quantity":5}]}
 function create(product, quantity) {
@@ -88,8 +90,7 @@ function addToCart(idd) {
         alert("Firstly,choose the quantity")
 
     }
-
-
+    appearOfCart();
 }
 
 function animation() {
