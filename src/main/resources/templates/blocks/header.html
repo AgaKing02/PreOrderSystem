@@ -14,10 +14,6 @@
         <a class="p-2 text-dark" href="/food/add" sec:authorize="hasRole('ROLE_ADMIN')">Add Food</a>
         <a class="p-2 text-dark" href="/indent/general" sec:authorize="hasRole('ROLE_COOK')">My Job</a>
         <a class="p-2 text-dark" href="/table/track" sec:authorize="hasRole('ROLE_WAITER')">My Job</a>
-
-
-
-
         <a class="p-2 text-dark" href="/about">About</a>
     </nav>
     <a class="btn btn-outline-primary" href="/login" sec:authorize="isAnonymous()">Sign in</a>
