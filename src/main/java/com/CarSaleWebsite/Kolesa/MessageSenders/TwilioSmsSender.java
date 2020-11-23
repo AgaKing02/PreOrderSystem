@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+
 @Service
 public class TwilioSmsSender implements SmsSender {
     private static final Logger LOGGER= LoggerFactory.getLogger(TwilioSmsSender.class);
@@ -20,11 +22,11 @@ public class TwilioSmsSender implements SmsSender {
     }
 
     @Override
-    public void sendSms(SmsRequest smsRequest) {
+    public void sendSms(@Valid SmsRequest smsRequest) {
         if (isPhoneNumberValid(smsRequest.getPhoneNumber())) {
             PhoneNumber to = new PhoneNumber(smsRequest.getPhoneNumber());
             PhoneNumber from = new PhoneNumber(twilioConfiguration.getTrailNumber());
-            String message = smsRequest.getMessage();
+            String message = smsRequest.getPhoneNumber();
             MessageCreator creator = Message.creator(to, from, message);
             creator.create();
             LOGGER.info("Send sms {}", smsRequest);
