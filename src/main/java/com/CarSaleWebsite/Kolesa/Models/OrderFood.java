@@ -3,7 +3,6 @@ package com.CarSaleWebsite.Kolesa.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-
 @Entity
 public class OrderFood {
     @Id

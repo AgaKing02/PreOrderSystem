@@ -10,6 +10,7 @@ public interface DiningTablesRepository extends CrudRepository<DiningTables, Lon
     DiningTables findByID(Long ID);
     @Query("select d.section from DiningTables d where d.ID=?1")
     String findSectionbyTable_id(Long id);
+
     
 
 }
