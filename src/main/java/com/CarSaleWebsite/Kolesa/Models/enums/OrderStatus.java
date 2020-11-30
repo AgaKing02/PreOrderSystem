@@ -1,4 +1,4 @@
-package com.CarSaleWebsite.Kolesa.Models.utils.enums;
+package com.CarSaleWebsite.Kolesa.Models.enums;
 
 public enum OrderStatus {
     WAITING,

@@ -1,7 +1,6 @@
-package com.CarSaleWebsite.Kolesa.Models.utils;
+package com.CarSaleWebsite.Kolesa.Models;
 
 
-import com.CarSaleWebsite.Kolesa.Models.Usr;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

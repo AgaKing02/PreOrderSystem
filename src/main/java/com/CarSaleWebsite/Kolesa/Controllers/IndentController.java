@@ -1,7 +1,7 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
-import com.CarSaleWebsite.Kolesa.Models.utils.Order;
-import com.CarSaleWebsite.Kolesa.Models.utils.enums.OrderStatus;
+import com.CarSaleWebsite.Kolesa.Models.Order;
+import com.CarSaleWebsite.Kolesa.Models.enums.OrderStatus;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderFoodRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderService;

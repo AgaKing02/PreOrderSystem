@@ -1,4 +1,4 @@
-package com.CarSaleWebsite.Kolesa.Models.utils;
+package com.CarSaleWebsite.Kolesa.Models;
 
 import javax.persistence.*;
 

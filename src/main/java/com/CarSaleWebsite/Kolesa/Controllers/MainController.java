@@ -2,8 +2,8 @@ package com.CarSaleWebsite.Kolesa.Controllers;
 
 
 import com.CarSaleWebsite.Kolesa.Configuration.SecurityServiceImpl;
-import com.CarSaleWebsite.Kolesa.Models.utils.Food;
-import com.CarSaleWebsite.Kolesa.Models.utils.Order;
+import com.CarSaleWebsite.Kolesa.Models.Food;
+import com.CarSaleWebsite.Kolesa.Models.Order;
 import com.CarSaleWebsite.Kolesa.Models.Usr;
 import com.CarSaleWebsite.Kolesa.Repositories.FoodRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;

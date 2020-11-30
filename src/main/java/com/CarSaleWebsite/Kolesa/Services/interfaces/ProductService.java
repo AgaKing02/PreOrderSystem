@@ -1,6 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Services.interfaces;
 
-import com.CarSaleWebsite.Kolesa.Models.utils.Food;
+import com.CarSaleWebsite.Kolesa.Models.Food;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Min;

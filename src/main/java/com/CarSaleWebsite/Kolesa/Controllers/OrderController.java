@@ -1,8 +1,8 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
-import com.CarSaleWebsite.Kolesa.Models.utils.DiningTableTrack;
-import com.CarSaleWebsite.Kolesa.Models.utils.Order;
-import com.CarSaleWebsite.Kolesa.Models.utils.OrderFood;
+import com.CarSaleWebsite.Kolesa.Models.DiningTableTrack;
+import com.CarSaleWebsite.Kolesa.Models.Order;
+import com.CarSaleWebsite.Kolesa.Models.OrderFood;
 import com.CarSaleWebsite.Kolesa.Repositories.DiningTableTrackRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderFoodRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;

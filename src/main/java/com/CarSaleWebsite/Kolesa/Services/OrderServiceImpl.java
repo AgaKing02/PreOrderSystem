@@ -1,8 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Services;
 
-import com.CarSaleWebsite.Kolesa.Models.Patterns.EmailSender;
-import com.CarSaleWebsite.Kolesa.Models.Patterns.NullEmailSender;
-import com.CarSaleWebsite.Kolesa.Models.utils.Order;
+import com.CarSaleWebsite.Kolesa.Models.Order;
 import com.CarSaleWebsite.Kolesa.Repositories.OrderRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderService;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,6 @@ import java.util.List;
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
-    private final EmailSender sender = new NullEmailSender();
     private final OrderRepository orderRepository;
 
     public OrderServiceImpl(OrderRepository orderRepository) {

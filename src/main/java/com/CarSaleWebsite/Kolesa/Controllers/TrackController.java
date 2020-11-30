@@ -1,7 +1,7 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
-import com.CarSaleWebsite.Kolesa.Models.utils.DiningTableTrack;
-import com.CarSaleWebsite.Kolesa.Models.utils.enums.OrderStatus;
+import com.CarSaleWebsite.Kolesa.Models.DiningTableTrack;
+import com.CarSaleWebsite.Kolesa.Models.enums.OrderStatus;
 import com.CarSaleWebsite.Kolesa.Repositories.DiningTableTrackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

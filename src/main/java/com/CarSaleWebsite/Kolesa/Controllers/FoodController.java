@@ -1,10 +1,8 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
 import com.CarSaleWebsite.Kolesa.Methods.StringConfigurerMethods;
-import com.CarSaleWebsite.Kolesa.Models.Patterns.FoodBuilder;
-import com.CarSaleWebsite.Kolesa.Models.Patterns.FoodBuilderImpl;
-import com.CarSaleWebsite.Kolesa.Models.utils.DiningTables;
-import com.CarSaleWebsite.Kolesa.Models.utils.Food;
+import com.CarSaleWebsite.Kolesa.Models.DiningTables;
+import com.CarSaleWebsite.Kolesa.Models.Food;
 import com.CarSaleWebsite.Kolesa.Repositories.DiningTablesRepository;
 import com.CarSaleWebsite.Kolesa.Repositories.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,16 +53,14 @@ public class FoodController {
                                 @RequestParam long price,
                                 @RequestParam String size,
                                 @RequestParam String image) {
-        FoodBuilder builder = new FoodBuilderImpl();
-
-        foodRepository.save( builder
-                .withCategory(category)
-                .withName(StringConfigurerMethods.replaceWhiteSpaceWithMinus(nme))
-                .withDescription(description)
-                .withPrice(price)
-                .withSize(size)
-                .withImageUrl(image)
-                .build());
+        Food food=new Food();
+        food.setName(nme);
+        food.setSize(size);
+        food.setPrice(price);
+        food.setDescription(description);
+        food.setCategory(category);
+        food.setImage_url(image);
+        foodRepository.save(food);
 
         return "redirect:/";
 

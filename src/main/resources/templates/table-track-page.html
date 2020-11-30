@@ -31,14 +31,26 @@
 <h1 th:if="${#lists.size(tables)>0}" class="text-center">Daily Done Orders</h1>
 <h1 th:if="${#lists.size(tables)==0}" class="text-center bg-warning rounded p-2">No orders done yet</h1>
 <div class="row">
-    <div th:each="table:${tables}" class="col-6 border border-secondary p-3 shadow rounded ">
-        <h1 th:text="'For order '+${table.orderid.getID()}"/>
-        <h1 class="btn btn-warning" th:text="'Table id is '+${table.getDiningTablesid().getTable_id()}"/>
-        <h2 th:text="'The location in restaurant is '+${table.getDiningTablesid().getSection()}"/>
-        <h3 th:text="'With '+${table.getDiningTablesid().getChair_count()}+' chair'"/>
+    <div class="card col-4 border-secondary pt-2 pl-2" style="width: 18rem;" th:each="table:${tables}">
+        <img src="https://strg1.restoran.kz/neofiles/serve-image/589c39ea579f241bdf379cbc" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title" th:text="'For order '+${table.orderid.getID()}"/>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" th:text="'Table id is '+${table.getDiningTablesid().getTable_id()}"/>
+            <li class="list-group-item"
+                th:text="'The location in restaurant is '+${table.getDiningTablesid().getSection()}"/>
+            <li class="list-group-item" th:text="'With '+${table.getDiningTablesid().getChair_count()}+' chair'"/>
+        </ul>
+        <div class="card-body">
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
     </div>
 </div>
-</div>
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">

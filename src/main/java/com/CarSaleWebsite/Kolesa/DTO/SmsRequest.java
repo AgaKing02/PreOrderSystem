@@ -1,4 +1,4 @@
-package com.CarSaleWebsite.Kolesa.MessageSenders;
+package com.CarSaleWebsite.Kolesa.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

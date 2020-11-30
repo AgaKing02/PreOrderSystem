@@ -1,6 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Services.interfaces;
 
-import com.CarSaleWebsite.Kolesa.Models.utils.Order;
+import com.CarSaleWebsite.Kolesa.Models.Order;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;

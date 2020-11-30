@@ -1,6 +1,6 @@
 package com.CarSaleWebsite.Kolesa.Repositories;
 
-import com.CarSaleWebsite.Kolesa.Models.utils.Food;
+import com.CarSaleWebsite.Kolesa.Models.Food;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
