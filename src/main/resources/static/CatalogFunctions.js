@@ -310,6 +310,19 @@ function deleteOrder(id) {
         form.submit();
     }
 
+    // function lastAccessedOrder() {
+    //     if (getParameterByName("last") != null) {
+    //      scrollToElement(getParameterByName("last"));
+    //     }
+    // }
+
+    function scrollToElement(idd) {
+        $('html, body').animate({
+            scrollTop: $("#order-"+idd).offset().top
+        }, 2000);
+    }
+
+
 }
 
 

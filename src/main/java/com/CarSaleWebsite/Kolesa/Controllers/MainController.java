@@ -65,18 +65,10 @@ public class MainController {
 
     @GetMapping("/profile")
     public String profilePage(Model model, Principal principal) {
-        Usr auth = usersRepository.findByUsername(principal.getName());
-        String role = auth.getRoles();
-        model.addAttribute("authuser", principal.getName());
-
-        List<Order> myOrders = orderRepository.findOrdersByUsername(principal.getName());
-        DoubleSummaryStatistics doubleSummaryStatistics = myOrders.stream().collect(Collectors.summarizingDouble(Order::getTotalOrderPrice));
-
-
-        model.addAttribute("statistics",doubleSummaryStatistics);
-        model.addAttribute("role", role);
-        return "profile-page";
+        return getString(model, principal);
     }
+
+
 
     @GetMapping("/users/add")
     public String addUserPage() {
@@ -100,7 +92,19 @@ public class MainController {
         return "about-page";
     }
 
+    private String getString(Model model, Principal principal) {
+        Usr auth = usersRepository.findByUsername(principal.getName());
+        String role = auth.getRoles();
+        model.addAttribute("authuser", principal.getName());
 
+        List<Order> myOrders = orderRepository.findMyPaidOrDoneOrders(principal.getName());
+        DoubleSummaryStatistics doubleSummaryStatistics = myOrders.stream().collect(Collectors.summarizingDouble(Order::getTotalOrderPrice));
+
+
+        model.addAttribute("statistics",doubleSummaryStatistics);
+        model.addAttribute("role", role);
+        return "profile-page";
+    }
 
 }
 

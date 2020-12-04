@@ -44,7 +44,7 @@ public class ChargeController {
         } catch (AuthenticationException e) {
             e.printStackTrace();
         }
-
+        model.addAttribute("order",order_id);
         model.addAttribute("id", charge != null ? charge.getId() :null);
         model.addAttribute("status", charge != null ? charge.getStatus() : null);
         model.addAttribute("chargeId", charge != null ? charge.getId() :null);

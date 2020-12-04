@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="icon" href="https://www.flaticon.com/premium-icon/icons/svg/562/562678.svg">
+
     <style>
         @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
@@ -78,7 +79,7 @@
 <div class="container">
     <div class="text-center" th:if="${#lists.size(orders)==0}"><h1 class="text-center bg-warning rounded p-2">No orders
         yet</h1></div>
-    <div th:each="order:${orders}" class="border border-secondary m-3 p-3 shadow rounded ">
+    <div th:each="order:${orders}" class="'border border-secondary m-3 p-3 shadow rounded" th:id="'order-'+${order.getID()}">
         <div class="row">
             <div th:each="food:${order.getOrderProducts()}" class="col-lg-2 text-center col-sm-3 col-xs-4">
                 <img style="height: 150px;width: 130px" th:src="${food.getProduct().getImage_url()}"
@@ -196,7 +197,9 @@
     </div>
 </div>
 <footer th:insert="blocks/footer :: footer"/>
+<script src="CatalogFunctions.js"></script>
 <script>
+
     function typeBuilder(idd, type) {
         return '{"orderDto":{"id":' + idd + '},"type":"' + type + '"}';
     }
@@ -234,5 +237,6 @@
         });
     }
 </script>
+
 </body>
 </html>

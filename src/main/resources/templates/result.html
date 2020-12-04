@@ -33,7 +33,7 @@
             <div>Charge id.: <span th:text='${chargeId}'/></div>
             <div>Balance transaction id.: <span th:text='${balance_transaction}'/></div>
         </div>
-        <a href="/api/orders" class="btn btn-primary">Check the Order</a>
+        <a th:href="'/api/orders?last='+${order}" class="btn btn-primary">Check the Order</a>
     </div>
     <div class="col-2"></div>
 </div>
