@@ -10,7 +10,67 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="icon" href="https://www.flaticon.com/premium-icon/icons/svg/562/562678.svg">
+    <style>
+        @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
+        fieldset, label {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin: 10px;
+        }
+
+        /****** Style Star Rating Widget *****/
+
+        .rating {
+            border: none;
+        }
+
+        .rating > input {
+            display: none;
+        }
+
+        .rating > label:before {
+            margin: 5px;
+            font-size: 1.25em;
+            font-family: FontAwesome;
+            display: inline-block;
+            content: "\f005";
+        }
+
+        .rating > .half:before {
+            content: "\f089";
+            position: absolute;
+        }
+
+        .rating > label {
+            color: #ddd;
+            float: right;
+        }
+
+        /***** CSS Magic to Highlight Stars on Hover *****/
+
+        .rating > input:checked ~ label, /* show gold star when clicked */
+        .rating:not(:checked) > label:hover, /* hover current star */
+        .rating:not(:checked) > label:hover ~ label {
+            color: #FFD700;
+        }
+
+        /* hover previous stars in list */
+
+        .rating > input:checked + label:hover, /* hover current star when changing rating */
+        .rating > input:checked ~ label:hover,
+        .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+        .rating > input:checked ~ label:hover ~ label {
+            color: #FFED85;
+        } </style>
 </head>
 <body>
 <header th:insert="blocks/header :: header"/>
@@ -29,24 +89,25 @@
                 <b>Price :<p th:text="${food.getProduct().getPrice()}"/></b>
             </div>
 
-            <div class="col-2 shadow ml-auto mt-auto mb-3 text-center mr-3"><h3>Total:</h3>
-                <h4 th:text="${order.getTotalOrderPrice()}"/>
-                <h3 th:text="${order.getStatus()}"/>
+            <div class="col-2 shadow ml-auto mt-auto mb-3 text-center mr-3"><h3 style="font-size:2vw;">Total:</h3>
+                <h4 style="font-size:2vw;" th:text="${order.getTotalOrderPrice()}"/>
+                <h3 style="font-size:2vw;" th:text="${order.getStatus()}"/>
             </div>
         </div>
 
 
         <div class="row">
             <div class="col-4"><p>Date Created</p>
-                <h3 th:text="${order.getDateCreated()}"/></div>
+                <h5 th:text="${order.getDateCreated()}"/></div>
             <div class="col-4"></div>
 
-            <div th:if="${order.getStatus()!='PAID'}" class="col-4  mt-auto text-right">
+            <div th:if="${order.getStatus()!='PAID'  && order.getStatus()!='DONE'}" class="col-4  mt-auto text-right">
                 <form class="m-1 " th:action="'/api/orders/remove/'+${order.getID()}" method="post" name="remove">
                     <input type="submit" value="Remove" class="btn btn-danger">
                 </form>
 
-                <button th:if="${order.getStatus()!='WITHCASH'}" th:id="${order.getID()}" class="btn btn-success" onclick="cash(this.id)">
+                <button th:if="${order.getStatus()!='WITHCASH' && order.getStatus()!='DONE'}" th:id="${order.getID()}"
+                        class="btn btn-success" onclick="cash(this.id)">
                     Cash
                     <abbr title="At Cashbox">
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cash-stack" fill="currentColor"
@@ -67,12 +128,14 @@
                         <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
                     </svg>
                 </a>
-                <button th:if="${order.getStatus()!='WITHWAITER'}" onclick="waiter(this.id)" th:id="${order.getID()}" class="btn btn-light py-2">With
+                <button th:if="${order.getStatus()!='WITHWAITER' && order.getStatus()!='DONE'}"
+                        onclick="waiter(this.id)" th:id="${order.getID()}" class="btn btn-light py-2">With
                     Waiter
                 </button>
             </div>
 
-            <div th:if="${order.getStatus()=='PAID' || order.getStatus()=='WITHCASH' || order.getStatus()=='WITHWAITER'}" class="col-4  text-right mt-auto ml-auto">
+            <div th:if="${order.getStatus()=='PAID' || order.getStatus()=='WITHCASH' || order.getStatus()=='WITHWAITER'}"
+                 class="col-4  text-right mt-auto ml-auto">
                 <abbr title="Wait the order" class="initialism">
                     <button class="btn btn-warning " type="button" disabled>
                         <span class="spinner-border spinner-border-md text-dark" role="status"
@@ -80,6 +143,35 @@
                         <!--                        <span class="sr-only">Loading...</span>-->
                     </button>
                 </abbr>
+            </div>
+            <div th:if="${order.getStatus()=='DONE'}" class="col-4  text-right mt-auto ml-auto pr-auto">
+                Rate us:
+                <fieldset class="rating">
+                    <input type="radio" id="star5" name="rating" value="5"/><label class="full" for="star5"
+                                                                                   title="Awesome - 5 stars"></label>
+                    <input type="radio" id="star4half" name="rating" value="4 and a half"/><label class="half"
+                                                                                                  for="star4half"
+                                                                                                  title="Pretty good - 4.5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4"/><label class="full" for="star4"
+                                                                                   title="Pretty good - 4 stars"></label>
+                    <input type="radio" id="star3half" name="rating" value="3 and a half"/><label class="half"
+                                                                                                  for="star3half"
+                                                                                                  title="Meh - 3.5 stars"></label>
+                    <input type="radio" id="star3" name="rating" value="3"/><label class="full" for="star3"
+                                                                                   title="Meh - 3 stars"></label>
+                    <input type="radio" id="star2half" name="rating" value="2 and a half"/><label class="half"
+                                                                                                  for="star2half"
+                                                                                                  title="Kinda bad - 2.5 stars"></label>
+                    <input type="radio" id="star2" name="rating" value="2"/><label class="full" for="star2"
+                                                                                   title="Kinda bad - 2 stars"></label>
+                    <input type="radio" id="star1half" name="rating" value="1 and a half"/><label class="half"
+                                                                                                  for="star1half"
+                                                                                                  title="Meh - 1.5 stars"></label>
+                    <input type="radio" id="star1" name="rating" value="1"/><label class="full" for="star1"
+                                                                                   title="Sucks big time - 1 star"></label>
+                    <input type="radio" id="starhalf" name="rating" value="half"/><label class="half" for="starhalf"
+                                                                                         title="Sucks big time - 0.5 stars"></label>
+                </fieldset>
             </div>
 
         </div>
@@ -130,12 +222,12 @@
             cache: false,
             timeout: 600000,
             success: function (data) {
-                var json = "<h4>Payment</h4><button class='btn btn-primary'>" +"<a href='/api/orders' style='color: white;'>"+response.responseText+"</a></button>";
+                var json = "<h4>Payment</h4><button class='btn btn-primary'>" + "<a href='/api/orders' style='color: white;'>" + response.responseText + "</a></button>";
                 $('#message').html(json);
                 styles("success");
             },
             error: function (response, error, errorThrown) {
-                var json = "<h4>Payment</h4><button class='btn btn-primary'>" +"<a href='/api/orders' style='color: white;'>"+response.responseText+"</a></button>";
+                var json = "<h4>Payment</h4><button class='btn btn-primary'>" + "<a href='/api/orders' style='color: white;'>" + response.responseText + "</a></button>";
                 $('#message').html(json);
                 styles("danger");
             }

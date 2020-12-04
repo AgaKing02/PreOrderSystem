@@ -30,6 +30,10 @@ public class PhoneNumberValidationController {
     @PostMapping("/code")
     public @ResponseBody
     ResponseEntity<?> sendVerificationCode(@Valid @RequestBody PhoneNumber phoneNumber) {
+        return getStringResponseEntity(phoneNumber);
+    }
+
+    private ResponseEntity<String> getStringResponseEntity(PhoneNumber phoneNumber) {
         if (phoneNumber.getPhoneNumber().length() == 12) {
             if (service.sendVerificationCode(phoneNumber).equals(phoneNumber.getPhoneNumber())) {
                 return ResponseEntity.ok("Completed successfully,check the phone");
@@ -47,6 +51,10 @@ public class PhoneNumberValidationController {
     @PostMapping("/check")
     public @ResponseBody
     ResponseEntity<?> checkVerificationCode(@Valid @RequestBody Code code) {
+        return getStringResponseEntity(code);
+    }
+
+    private ResponseEntity<String> getStringResponseEntity(Code code) {
         if (code.getCode().length() == 4) {
             if (service.checkVerificationCode(code).equals("auto-login")) {
                 return ResponseEntity.ok("Auto-Login started");
