@@ -59,7 +59,7 @@ public class TestContoller {
                     .collect(Collectors.joining(",")));
             return ResponseEntity.badRequest().body(result);
         }
-        if(orderTypeDto==null){
+        if (orderTypeDto == null) {
             return ResponseEntity.badRequest().body("Order is null");
 
         }
@@ -74,14 +74,14 @@ public class TestContoller {
         if (orderTypeDto.getType().equals(OrderStatus.WITHCASH.name())) {
             order.setStatus(OrderStatus.WITHCASH.name());
             orderRepository.save(order);
-        }else if(orderTypeDto.getType().equals(OrderStatus.WITHWAITER.name())){
+        } else if (orderTypeDto.getType().equals(OrderStatus.WITHWAITER.name())) {
             order.setStatus(OrderStatus.WITHWAITER.name());
             orderRepository.save(order);//3-6-9-12-15
-        }else {
+        } else {
             return ResponseEntity.badRequest().body("The error occured");
         }
 
-        return ResponseEntity.ok("Accepted "+order.getID());
+        return ResponseEntity.ok("Accepted " + order.getID());
     }
 
     @GetMapping("/test")
@@ -98,7 +98,6 @@ public class TestContoller {
 
     @PostMapping("/api/test/{table}")
     public ResponseEntity<?> create(@RequestBody PurchaseController.OrderForm form, Errors errors, Principal principal, @PathVariable(name = "table") int chair) throws JsonProcessingException {
-        System.out.println("Table is"+chair);
         AjaxResponseBody result = new AjaxResponseBody();
 
         if (errors.hasErrors()) {
@@ -108,13 +107,10 @@ public class TestContoller {
                     .collect(Collectors.joining(",")));
 
             return ResponseEntity.badRequest().body(result);
-
         }
         if (orderRepository.findCountofOrderByUsername(principal.getName()) >= 2) {
-
             return ResponseEntity.badRequest().body("Firstly pay the waiting orders");
         }
-
         if (principal.getName().isEmpty()) {
             return ResponseEntity.badRequest().body("User not found");
         }
@@ -144,14 +140,13 @@ public class TestContoller {
         }
         order.setOrderProducts(orderProducts);
         this.orderService.update(order);
-        if(chair>0){
-            DiningTables diningTables=diningTablesRepository.findByID((long) chair);
-            diningTableTrackRepository.save(new DiningTableTrack(diningTables,order));
+        if (chair > 0) {
+            DiningTables diningTables = diningTablesRepository.findByID((long) chair);
+            diningTableTrackRepository.save(new DiningTableTrack(diningTables, order));
         }
 //        ObjectMapper mapper = new ObjectMapper();
 //        String jsonString = mapper.writeValueAsString(formDtos);
 //        result.setResult(jsonString);
-
         return ResponseEntity.ok(result);
     }
 

@@ -310,11 +310,11 @@ function deleteOrder(id) {
         form.submit();
     }
 
-    // function lastAccessedOrder() {
-    //     if (getParameterByName("last") != null) {
-    //      scrollToElement(getParameterByName("last"));
-    //     }
-    // }
+    function lastAccessedOrder() {
+        if (getParameterByName("last") != null) {
+         scrollToElement(getParameterByName("last"));
+        }
+    }
 
     function scrollToElement(idd) {
         $('html, body').animate({

@@ -105,6 +105,12 @@ public class FoodController {
 
     @GetMapping("/catalog")
     public String catalogPagewithChair(@RequestParam(name = "chair", required = false, defaultValue = "0") Long chair_id, Model model) {
+        getCatalog(chair_id, model);
+        return "catalog-page";
+
+    }
+
+    private void getCatalog(Long chair_id, Model model) {
         Iterable<Food> foodList = foodRepository.findAll();
         List<String> categories = foodRepository.findAllCategories();
         List<String> colors = StringConfigurerMethods.allColorsinBootstrap();
@@ -117,10 +123,6 @@ public class FoodController {
         }
         model.addAttribute("categories", categories);
         model.addAttribute("colors", colors);
-
-
-        return "catalog-page";
-
     }
 
     @GetMapping("/food/edit/{id}")
@@ -143,6 +145,11 @@ public class FoodController {
                                  @RequestParam String size,
                                  @RequestParam String image) {
 
+        return addFood(id, category, nme, description, price, size, image);
+
+    }
+
+    private String addFood(Long id, String category, String nme, String description, long price, String size, String image) {
         Food food = foodRepository.findByID(id);
         food.setName(nme);
         food.setCategory(category);
@@ -153,7 +160,6 @@ public class FoodController {
 
         foodRepository.save(food);
         return "redirect:/";
-
     }
 
     @PostMapping("/food/remove/{id}")

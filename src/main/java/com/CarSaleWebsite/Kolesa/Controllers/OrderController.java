@@ -38,7 +38,7 @@ public class OrderController {
     }
 
     @GetMapping("api/orders")
-    public String list(Principal principal, Model model) {
+    public String list(Principal principal, Model model, @RequestParam(name = "last", required = false, defaultValue = "-1") long order) {
         Iterable<Order> orders = orderService.getMyOrder(principal.getName());
         if (orders == null) {
             return "redirect:/catalog";
@@ -56,13 +56,12 @@ public class OrderController {
         if (deletable.getStatus().equals("WAITING") || deletable.getStatus().equals("WITHCASH") || deletable.getStatus().equals("WITHWAITER")) {
             List<OrderFood> orderFoods = orderFoodRepository.findAllByOrderID(id);
 
-            DiningTableTrack diningTableTrack=diningTableTrackRepository.findByOrderid(deletable);
-            if(diningTableTrack!=null){
-              diningTableTrackRepository.delete(diningTableTrack);
+            DiningTableTrack diningTableTrack = diningTableTrackRepository.findByOrderid(deletable);
+            if (diningTableTrack != null) {
+                diningTableTrackRepository.delete(diningTableTrack);
             }
             orderFoodRepository.deleteAll(orderFoods);
             orderRepository.delete(deletable);
-
 
 
         }
