@@ -1,5 +1,7 @@
 package com.CarSaleWebsite.Kolesa.MessageSenders;
 
+import com.CarSaleWebsite.Kolesa.DTO.Code;
+import com.CarSaleWebsite.Kolesa.MessageSenders.interfaces.SmsSender;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.rest.api.v2010.account.MessageCreator;
 import com.twilio.type.PhoneNumber;
@@ -21,7 +23,6 @@ public class TwilioSmsSender implements SmsSender {
         this.twilioConfiguration = twilioConfiguration;
     }
 
-    @Override
     public void sendSms(@Valid SmsRequest smsRequest) {
         if (isPhoneNumberValid(smsRequest.getPhoneNumber())) {
             PhoneNumber to = new PhoneNumber(smsRequest.getPhoneNumber());
@@ -41,5 +42,20 @@ public class TwilioSmsSender implements SmsSender {
     private boolean isPhoneNumberValid(String phoneNumber) {
         // TODO: Implement phone number validator
         return true;
+    }
+
+    @Override
+    public void sendSms(com.CarSaleWebsite.Kolesa.DTO.SmsRequest smsRequest) {
+
+    }
+
+    @Override
+    public String sendVerificationCode(com.CarSaleWebsite.Kolesa.DTO.PhoneNumber phoneNumber) {
+        return null;
+    }
+
+    @Override
+    public String checkVerificationCode(Code code) {
+        return null;
     }
 }
