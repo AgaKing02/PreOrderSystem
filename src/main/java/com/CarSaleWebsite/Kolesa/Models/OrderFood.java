@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Entity
 public class OrderFood {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long order_food_id;
 
     @JsonBackReference

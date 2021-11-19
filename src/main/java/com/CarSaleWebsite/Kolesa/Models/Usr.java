@@ -10,8 +10,8 @@ import java.util.List;
 public class Usr {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long user_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
     private String username;
 
@@ -67,7 +67,7 @@ public class Usr {
     }
 
     public Long getId() {
-        return user_id;
+        return userId;
     }
 
     public List<String> getRoleList(){

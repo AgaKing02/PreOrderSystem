@@ -1,6 +1,7 @@
 package com.CarSaleWebsite.Kolesa.Controllers;
 
 import com.CarSaleWebsite.Kolesa.DTO.OrderProductDto;
+import com.CarSaleWebsite.Kolesa.Exceptions.ResourceNotFoundException;
 import com.CarSaleWebsite.Kolesa.Models.Order;
 import com.CarSaleWebsite.Kolesa.Models.OrderFood;
 import com.CarSaleWebsite.Kolesa.Models.enums.OrderStatus;
@@ -9,13 +10,14 @@ import com.CarSaleWebsite.Kolesa.Repositories.UsersRepository;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderProductService;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.OrderService;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.ProductService;
-import com.CarSaleWebsite.Kolesa.Exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.security.Principal;
@@ -46,9 +48,8 @@ public class PurchaseController {
     }
 
 
-
     @PostMapping("/api/orders")
-    public ResponseEntity<Order> create(@RequestBody OrderForm form,Principal principal) {
+    public ResponseEntity<Order> create(@RequestBody OrderForm form, Principal principal) {
         List<OrderProductDto> formDtos = form.getProductOrders();
         validateProductsExistence(formDtos);
         Order order = new Order();
@@ -62,12 +63,12 @@ public class PurchaseController {
                     .add(orderProductService
                             .create(new OrderFood(
                                     order, productService.getProduct(
-                                            dto.getProduct().getName()), dto.getQuantity())));
+                                    dto.getProduct().getName()), dto.getQuantity())));
         }
 
         order.setOrderProducts(orderProducts);
         this.orderService.update(order);
-        orderProducts.forEach(orderFoodRepository::save);
+        orderFoodRepository.saveAll(orderProducts);
 
         String uri = ServletUriComponentsBuilder
                 .fromCurrentServletMapping()
@@ -84,9 +85,6 @@ public class PurchaseController {
         List<OrderProductDto> list = orderProducts
                 .stream()
                 .filter(op -> Objects.isNull(productService.getProduct(op.getProduct().getName()))).collect(Collectors.toList());
-
-
-
 
         if (!CollectionUtils.isEmpty(list)) {
             throw new ResourceNotFoundException("Product not found");

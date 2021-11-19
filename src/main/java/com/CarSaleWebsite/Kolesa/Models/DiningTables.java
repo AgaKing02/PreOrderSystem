@@ -10,7 +10,7 @@ import javax.validation.constraints.Min;
 @Entity
 public class DiningTables {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long ID;
 
     @Min(1)

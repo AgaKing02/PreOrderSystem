@@ -4,7 +4,6 @@ function action(classname) {
 }
 
 function plus(idd) {
-
     let value = parseInt($("input[name='count']#" + idd).val());
     if (value < 10) {
         $('input#' + idd).val(value + 1);
@@ -15,7 +14,6 @@ function minus(idd) {
     let value = parseInt($("input[name='count']#" + idd).val());
     if (value > 0) {
         $('input#' + idd).val(value - 1);
-
     }
 }
 
@@ -162,7 +160,7 @@ function buy() {
         data: json,
         dataType: 'json',
         cache: false,
-        timeout: 600000,
+        timeout: 6000,
         success: function (data) {
             if (readCookie("saveProducts") != null) {
                 eraseCookie("saveProducts")

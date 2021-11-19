@@ -2,8 +2,13 @@ package com.CarSaleWebsite.Kolesa.DTO;
 
 public class OrderProductDto {
 
-private FoodDto product;
-private Integer quantity;
+    private FoodDto product;
+    private Integer quantity;
+
+    public OrderProductDto(FoodDto product, Integer quantity) {
+        this.product = product;
+        this.quantity = quantity;
+    }
 
     public FoodDto getProduct() {
         return product;

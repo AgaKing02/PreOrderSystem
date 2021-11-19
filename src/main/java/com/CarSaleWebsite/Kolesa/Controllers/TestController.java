@@ -17,18 +17,21 @@ import com.CarSaleWebsite.Kolesa.Services.OrderServiceImpl;
 import com.CarSaleWebsite.Kolesa.Services.interfaces.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.testng.annotations.Test;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SpringBootTest
 @RestController
-public class TestContoller {
+public class TestController {
     private final OrderProductServiceImpl orderProductService;
     private final ProductService productService;
     private final UsersRepository usersRepository;
@@ -38,7 +41,7 @@ public class TestContoller {
     private final DiningTablesRepository diningTablesRepository;
     private final DiningTableTrackRepository diningTableTrackRepository;
 
-    public TestContoller(OrderProductServiceImpl orderProductService, ProductService productService, UsersRepository usersRepository, OrderServiceImpl orderService, OrderFoodRepository orderFoodRepository, OrderRepository orderRepository, DiningTablesRepository diningTablesRepository, DiningTableTrackRepository diningTableTrackRepository) {
+    public TestController(OrderProductServiceImpl orderProductService, ProductService productService, UsersRepository usersRepository, OrderServiceImpl orderService, OrderFoodRepository orderFoodRepository, OrderRepository orderRepository, DiningTablesRepository diningTablesRepository, DiningTableTrackRepository diningTableTrackRepository) {
         this.orderProductService = orderProductService;
         this.productService = productService;
         this.usersRepository = usersRepository;
@@ -50,6 +53,7 @@ public class TestContoller {
     }
 
     @PostMapping("/paytype")
+    @Test
     public ResponseEntity<?> chooseType(@RequestBody OrderTypeDto orderTypeDto, Errors errors, Principal principal) {
         AjaxResponseBody result = new AjaxResponseBody();
 
@@ -85,6 +89,7 @@ public class TestContoller {
     }
 
     @GetMapping("/test")
+    @Test
     public String test() throws JsonProcessingException {
         OrderTypeDto orderTypeDto = new OrderTypeDto();
         orderTypeDto.setOrderDto(new OrderDto((long) 1));
@@ -97,6 +102,7 @@ public class TestContoller {
 
 
     @PostMapping("/api/test/{table}")
+    @Test
     public ResponseEntity<?> create(@RequestBody PurchaseController.OrderForm form, Errors errors, Principal principal, @PathVariable(name = "table") int chair) throws JsonProcessingException {
         AjaxResponseBody result = new AjaxResponseBody();
 

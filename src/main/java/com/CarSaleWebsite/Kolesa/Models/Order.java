@@ -15,7 +15,7 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
